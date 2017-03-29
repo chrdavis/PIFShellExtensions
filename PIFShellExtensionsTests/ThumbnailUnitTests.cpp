@@ -353,26 +353,6 @@ namespace PIFShellExtensionsTests
             VerifyLoadFileArrayViaGetThumbnail(500, 500, ARRAYSIZE(g_rgPGMBTestFiles), g_rgPGMBTestFiles);
         }
 
-        TEST_METHOD(VerifyGetPropertyStore)
-        {
-            CComPtr<IStream> spStream;
-            Assert::IsTrue(SHCreateStreamOnFileEx(SZ_ROOT_TEST_FOLDER L"PBMA\\fool.ascii.pbm", STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &spStream) == S_OK);
-
-            CPIFImageExtractor* pPIFImageExtractor = new CPIFImageExtractor();
-            Assert::IsNotNull(pPIFImageExtractor);
-
-            CComPtr<IInitializeWithStream> spInitWithStream;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spInitWithStream)) == S_OK);
-
-            Assert::IsTrue(spInitWithStream->Initialize(spStream, STGM_READ) == S_OK);
-
-            CComPtr<IPropertyStore> spPropStore;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spPropStore)) == S_OK);
-
-            PROPVARIANT pv = {};
-            Assert::IsTrue(spPropStore->GetValue(PKEY_Image_Dimensions, &pv) == S_OK);
-        }
-
         // TODO:
         // Invalid file types
         // Verify sizes of returned images

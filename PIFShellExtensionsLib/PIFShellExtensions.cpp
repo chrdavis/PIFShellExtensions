@@ -118,7 +118,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetCurFile(_Outptr_ LPOLESTR* ppszFileName)
 }
 
 // IDataObject
-IFACEMETHODIMP CPIFImageExtractor::EnumFormatEtc(_In_ DWORD dwDirFlags, _COM_Outptr_ IEnumFORMATETC** ppiefe)
+IFACEMETHODIMP CPIFImageExtractor::EnumFormatEtc(_In_ DWORD, _COM_Outptr_ IEnumFORMATETC** ppiefe)
 {
     FORMATETC rgfmtetc[] =
     {
@@ -129,7 +129,6 @@ IFACEMETHODIMP CPIFImageExtractor::EnumFormatEtc(_In_ DWORD dwDirFlags, _COM_Out
 
 IFACEMETHODIMP CPIFImageExtractor::QueryGetData(_In_ FORMATETC* pfe)
 {
-    BOOL fRet = FALSE;
     HRESULT hr = pfe ? S_OK : E_POINTER;
     if (SUCCEEDED(hr))
     {
