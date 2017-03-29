@@ -1,0 +1,285 @@
+
+<!-- saved from url=(0055)http://people.sc.fsu.edu/~jburkardt/data/pgmb/pgmb.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      PGMB Files - Binary Portable Gray Map Graphics Files
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align="center">
+      PGMB Files <br> Binary Portable Gray Map Graphics Files
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PGMB</b> is a data directory of
+      Binary PGM files, the binary form of the portable gray map
+      PGM format.  It is a simple gray map description.  The definition
+      is as follows:
+      </p><ul>
+        <li>
+          the typical file extension is ".pgm", but an extension of
+          ".pnm" is also occasionally  used.
+        </li>
+        <li>
+          A "magic number" for identifying the file type.  A
+          binary PGM file's magic
+          number is the two characters "P5".
+        </li>
+        <li>
+          Whitespace (blanks, TABs, CRs, LFs).
+        </li>
+        <li>
+          A width, formatted as ASCII characters in decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          A height, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          The maximum gray value, MAXVAL, again in ASCII decimal.  MAXVAL
+          must be between 0 and 255.
+        </li>
+        <li>
+          A single character of whitespace, typically a newline;
+        </li>
+        <li>
+          Width * height gray values, each stored as a plain byte, between 0
+          and the
+          specified maximum value, separated by whitespace, starting at the
+          top-left corner of the graymap, proceeding in normal English
+          reading order.
+          A value of 0 means black, and the maximum value means white.
+        </li>
+      </ul>
+      Characters from a "#" to the next end-of-line are ignored (comments).
+    <p></p>
+
+    <h3 align="center">
+      Binary PGM File Characteristics:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          binary
+        </li>
+        <li>
+          Gray scale only
+        </li>
+        <li>
+          2D
+        </li>
+        <li>
+          No compression
+        </li>
+        <li>
+          1 image
+        </li>
+      </ul>
+    <p></p>
+
+    <h3 align="center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href="http://people.sc.fsu.edu/~jburkardt/txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align="center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pbmb/pbmb.html">
+      PBMB</a>,
+      a data directory which
+      contains examples of binary PBM files,
+      binary Portable Bit Map 2D graphics, black and white;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pgma.html">
+      PGMA</a>,
+      a data directory which
+      contains examples of ASCII PGM files,
+      ASCII Portable Gray Map, 2D graphics;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/ppmb.html">
+      PPMB</a>,
+      a data directory which
+      contains examples of binary PPM files,
+      Portable Pixel Map (binary) 2D graphics, color;
+    </p>
+
+    <h3 align="center">
+      Reference:
+    </h3>
+
+    <p>
+      </p><ol>
+        <li>
+          <a href="http://netpbm.sourceforge.net/">the NETPBM homepage</a>.
+        </li>
+      </ol>
+    <p></p>
+
+    <h3 align="center">
+      Sample Files:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/baboon.pgm">baboon.pgm</a>, a baboon.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/baboon.png">baboon.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/barbara.pgm">barbara.pgm</a>.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/barbara.png">barbara.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/bird.pgm">bird.pgm</a>, a bird.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/bird.png">bird.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/buffalo.pgm">buffalo.pgm</a>, a small herd of buffalo.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/buffalo.png">buffalo.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/casablanca.pgm">casablanca.pgm</a>, a still from the movie "Casablanca".
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/casablanca.png">casablanca.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/coins.pgm">coins.pgm</a>, some coins.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/coins.png">coins.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/columns.pgm">columns.pgm</a>,
+          a 640x480 image of a person standing by some columns;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/columns.png">columns.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/dewey_defeats_truman.pgm">dewey_defeats_truman.pgm</a>, 
+          a famously erroneous newspaper headline.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/dewey_defeats_truman.png">dewey_defeats_truman.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/feep.pgm">feep.pgm</a>, a simple 7 by 24 example that
+          displays "FEEP" in block letters.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/feep.png">feep.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/ladyzhenskaya.pgm">ladyzhenskaya.pgm</a>.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/ladyzhenskaya.png">ladyzhenskaya.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/lena.pgm">lena.pgm</a>.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/lena.png">lena.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/lena_noisy.pgm">lena_noisy.pgm</a>,
+          a "noisy" version of the <b>lena</b> image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/lena_noisy.png">lena_noisy.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/milking.pgm">milking.pgm</a>, a cow being milked.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/milking.png">milking.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/mona_lisa.pgm">mona_lisa.pgm</a>, the Mona Lisa.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/mona_lisa.png">mona_lisa.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/pbmlib.pgm">pbmlib.pgm</a>, a file created by PBMLIB.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/pbmlib.png">pbmlib.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/pepper.pgm">pepper.pgm</a>, a picture of peppers.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/pepper.png">pepper.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/roi_14.pgm">roi_14.pgm</a>,
+          a 507 wide by 505 high image an MRI, the 14th in a sequence.11
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/roi_14.png">roi_14.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/snap.pgm">snap.pgm</a>,
+          a snapshot of a mother and child.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/snap.png">snap.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/surf.pgm">surf.pgm</a>, a beach picture.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/surf.png">surf.png</a>, a PNG image.
+        </li>
+      </ul>
+    <p></p>
+
+    <p>
+      You can go up one level to
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/data.html">the DATA page.</a>
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 22 July 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  
+
+
+</body></html>

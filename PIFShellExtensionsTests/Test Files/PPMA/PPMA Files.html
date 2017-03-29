@@ -1,0 +1,224 @@
+
+<!-- saved from url=(0055)http://people.sc.fsu.edu/~jburkardt/data/ppma/ppma.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      PPMA Files
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align="center">
+      PPMA Files <br> Portable Pixel Map (ASCII)
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PPMA</b> is a data directory which
+      contains examples of the ASCII version of the portable pixel map PPM format.
+      It is a simple RGB color image description.  The definition is as follows:
+      </p><ul>
+        <li>
+          the typical file extension is ".ppm", but an extension of
+          ".pnm" is also occasionally  used.
+        </li>
+        <li>
+          A "magic number" for identifying the file type.  An ASCII
+          PPM file's magic number is the two characters "P3".
+        </li>
+        <li>
+          Whitespace (blanks, TABs, CRs, LFs).
+        </li>
+        <li>
+          A width, formatted as ASCII characters in decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          A height, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          The maximum color-component value, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          Width * height pixels, each three ASCII decimal values between 0 and
+          the specified maximum value, starting at the top-left corner of the
+          pixmap, proceeding in normal English reading order.  The three values
+          for each pixel represent red, green, and blue, respectively; a value
+          of 0 means that color is off, and the maximum value means that color
+          is maxed out.
+        </li>
+      </ul>
+      Characters from a "#" to the next end-of-line are ignored (comments).
+      No line should be longer than 70 characters.
+    <p></p>
+
+    <h3 align="center">
+      Example PPMA File:
+    </h3>
+
+    <p>
+      </p><pre>        P3
+        # feep.ppma
+        4 4
+        15
+         0  0  0  0  0  0    0  0  0   15  0 15
+         0  0  0  0 15  7    0  0  0    0  0  0
+         0  0  0  0  0  0    0 15  7    0  0  0
+        15  0 15  0  0  0    0  0  0    0  0  0
+      </pre>
+    <p></p>
+
+    <h3 align="center">
+      PPMA File Characteristics:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          ASCII
+        </li>
+        <li>
+          RGB color
+        </li>
+        <li>
+          2D
+        </li>
+        <li>
+          No compression
+        </li>
+        <li>
+          1 image
+        </li>
+      </ul>
+    <p></p>
+
+    <h3 align="center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href="http://people.sc.fsu.edu/~jburkardt/txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align="center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/pbma.html">
+      PBMA</a>,
+      a data directory which
+      describes the ASCII Portable Bit Map format.
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pgma.html">
+      PGMA</a>,
+      a data directory which
+      describes the ASCII Portable Gray Map format.
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/ppmb.html">
+      PPMB</a>,
+      a data directory which
+      describes the binary Portable Pixel Map format.
+    </p>
+
+    <h3 align="center">
+      Reference:
+    </h3>
+
+    <p>
+      </p><ol>
+        <li>
+          <a href="http://netpbm.sourceforge.net/">the NETPBM homepage</a>.
+        </li>
+      </ol>
+    <p></p>
+
+    <h3 align="center">
+      Sample Files:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/blackbuck.ascii.ppm">blackbuck.ascii.ppm</a>, a picture of a buck.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/blackbuck.png">blackbuck.png</a>,
+          a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/feep.ascii.ppm">feep.ascii.ppm</a>, a simple example.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/feep.png">feep.png</a>,
+          a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/pbmlib.ascii.ppm">pbmlib.ascii.ppm</a>.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/pbmlib.png">pbmlib.png</a>,
+          a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/sines.ascii.ppm">sines.ascii.ppm</a>,
+          a kind of bar plot of sine functions, created by
+          <a href="http://people.sc.fsu.edu/~jburkardt/f_src/bar_plot/bar_plot.html">BAR_PLOT</a>.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/sines.png">sines.png</a>,
+          a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/snail.ascii.ppm">snail.ascii.ppm</a>, 
+          a picture of a snail.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/snail.png">snail.png</a>,
+          a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/star_field.ascii.ppm">
+          star_field.ascii.ppm</a>,
+          an astronomical image of many stars.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/star_field.png">
+          star_field.png</a>,
+          a PNG image.
+        </li>
+      </ul>
+    <p></p>
+
+    <p>
+      You can go up one level to
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/data.html">the DATA page.</a>
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 22 July 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  
+
+
+</body></html>

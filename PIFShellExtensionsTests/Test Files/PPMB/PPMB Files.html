@@ -1,0 +1,232 @@
+
+<!-- saved from url=(0055)http://people.sc.fsu.edu/~jburkardt/data/ppmb/ppmb.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      PPMB Files
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align="center">
+      PPMB Files <br> Portable Pixel Map (binary)
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PPMB</b> is a data directory which
+      contains examples of the binary version of the PPM portable pixel map format.
+      It is a simple RGB color image description.  The definition is as follows:
+      </p><ul>
+        <li>
+          the typical file extension is ".ppm", but an extension of
+          ".pnm" is also occasionally  used.
+        </li>
+        <li>
+          A "magic number" for identifying the file type.  A
+          binary PPMB file's magic
+          number is the two characters "P6".
+        </li>
+        <li>
+          Whitespace (blanks, TABs, CRs, LFs).
+        </li>
+        <li>
+          A width, formatted as ASCII characters in decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          A height, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          The maximum color-component value MAXVAL, again in ASCII decimal.
+          For the binary format, MAXVAL cannot be any greater than 255.
+        </li>
+        <li>
+          a single charcter of "whitespace", usually a new line.
+        </li>
+        <li>
+          Width * height pixels, each pixel being described by 3 bytes, each
+          between 0 and the specified maximum value, starting at the top-left
+          corner of the pixmap, proceeding in normal English reading order.
+          The three values for each pixel represent red, green, and blue,
+          respectively; a value of 0 means that color is off, and the maximum
+          value means that color is maxed out.
+        </li>
+      </ul>
+    <p></p>
+
+    <h3 align="center">
+      PPMB File Characteristics:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          binary
+        </li>
+        <li>
+          RGB color
+        </li>
+        <li>
+          2D
+        </li>
+        <li>
+          No compression
+        </li>
+        <li>
+          1 image
+        </li>
+      </ul>
+    <p></p>
+
+    <h3 align="center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href="http://people.sc.fsu.edu/~jburkardt/txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align="center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/cpp_src/bmp_to_ppmb/bmp_to_ppmb.html">
+      BMP_TO_PPMB</a>,
+      a C++ program which
+      converts a Microsoft BMP file
+      to a
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/ppmb.html">binary PPM file</a>;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pbmb/pbmb.html">
+      PBMB</a>,
+      a data directory which
+      contains examples of binary PBM files,
+      binary Portable Bit Map 2D graphics, black and white;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/pgmb.html">
+      PGMB</a>,
+      a data directory which
+      contains examples of binary PGM files,
+      binary Portable Gray Map, 2D graphics;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/ppma.html">
+      PPMA</a>,
+      a data directory which
+      contains examples of ASCII PPM files,
+      Portable Pixel Map (ASCII) 2D graphics, color;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/cpp_src/ppma_to_ppmb/ppma_to_ppmb.html">
+      PPMA_TO_PPMB</a>,
+      a C++ program which
+      converts an ASCII PPM file to a binary PPM file;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/cpp_src/ppmb_io/ppmb_io.html">
+      PPMB_IO</a><a>,
+      a C++ library which
+      handles the binary PPM (Portable Pixel Map) format.
+    </a></p><a>
+
+    </a><p><a>
+      </a><a href="http://people.sc.fsu.edu/~jburkardt/cpp_src/ppmb_to_bmp/ppmb_to_bmp.html">
+      PPMB_TO_BMP</a>,
+      a C++ program which
+      converts a binary PPM file to a Microsoft BMP file;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/cpp_src/ppmb_to_ppma/ppmb_to_ppma.html">
+      PPMB_TO_PPMA</a>,
+      a C++ program which
+      converts a binary PPM file to an ASCII PPM file;
+    </p>
+
+    <h3 align="center">
+      Reference:
+    </h3>
+
+    <p>
+      </p><ol>
+        <li>
+          <a href="http://netpbm.sourceforge.net/">the NETPBM homepage</a>.
+        </li>
+      </ol>
+    <p></p>
+
+    <h3 align="center">
+      Sample Files:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/bell_206.ppm">bell_206.ppm</a>, a Bell 206 helicopter.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/bell_206.png">bell_206.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/blackbuck.ppm">blackbuck.ppm</a>, a picture of a buck.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/blackbuck.png">blackbuck.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/newton.ppm">newton.ppm</a>, an image of the basins
+          of attraction of Newton's method for Z^3=1.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/newton.png">newton.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/pbmlib.ppm">pbmlib.ppm</a>.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/pbmlib.png">pbmlib.png</a>, a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/underwater_bmx.ppm">underwater_bmx.ppm</a>,
+          a slightly blurred image of a bicycle rider on a diving board.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/ppmb/underwater_bmx.png">underwater_bmx.png</a>, a PNG version.
+        </li>
+      </ul>
+    <p></p>
+
+    <p>
+      You can go up one level to
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/data.html">the DATA page.</a>
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 01 April 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  
+
+
+</body></html>

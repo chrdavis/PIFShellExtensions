@@ -1,0 +1,274 @@
+
+<!-- saved from url=(0055)http://people.sc.fsu.edu/~jburkardt/data/pbma/pbma.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      PBMA Files
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align="center">
+      PBMA Files <br> ASCII Portable Bit Map Graphics Files
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PBMA</b> is a data directory which
+      contains examples of the ASCII version of the portable bitmap (PBM) format,
+      a lowest common denominator monochrome (black and white) file format.
+      It was originally designed to make it reasonable to mail bitmaps between
+      different types of machines.  Now it serves as the common language
+      of a large family of bitmap conversion filters.
+    </p>
+
+    <p>
+      The definition is as follows:
+      </p><ul>
+        <li>
+          the typical file extension is ".pbm", but an extension of
+          ".pnm" is also occasionally  used.
+        </li>
+        <li>
+          A "magic number" for identifying the file type.  An
+          ASCII PBM file's magic number is the two characters "P1".
+        </li>
+        <li>
+          Whitespace (blanks, TABs, CRs, LFs).
+        </li>
+        <li>
+          A width, formatted as ASCII characters in decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          A height, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          Width * height bits, each either '1' or '0', starting at the top-left
+          corner of the bitmap, proceeding in normal English reading order.
+        </li>
+      </ul>
+      The character '1' means black, '0' means white.
+      Whitespace in the bits section is ignored.
+      Characters from a "#" to the next end-of-line are ignored (comments).
+      No line should be longer than 70 characters.
+    <p></p>
+
+    <h3 align="center">
+      Example ASCII PBM file:
+    </h3>
+
+    <p>
+      </p><pre>        P1
+        # feep.ascii.pbm
+        24 7
+        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+        0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0 0 1 1 1 1 0
+        0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 1 0
+        0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 0 0 0 1 1 1 1 0
+        0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0
+        0 1 0 0 0 0 0 1 1 1 1 0 0 1 1 1 1 0 0 1 0 0 0 0
+        0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+      </pre>
+    <p></p>
+
+    <h3 align="center">
+      ASCII PBM File Characteristics:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          ASCII
+        </li>
+        <li>
+          black and white
+        </li>
+        <li>
+          2D
+        </li>
+        <li>
+          No compression
+        </li>
+        <li>
+          1 image
+        </li>
+      </ul>
+    <p></p>
+
+    <h3 align="center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href="http://people.sc.fsu.edu/~jburkardt/txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align="center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/cpp_src/pbma_io/pbma_io.html">
+      PBMA_IO</a><a>,
+      a C++ library which
+      handles the Portable Bit Map (ASCII) format.
+    </a></p><a>
+
+    </a><p><a>
+      </a><a href="http://people.sc.fsu.edu/~jburkardt/data/pbmb/pbmb.html">
+      PBMB</a>,
+      a data directory which
+      contains examples of PBMB files,
+      binary Portable Bit Map 2D graphics, black and white;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/c_src/pbmlib/pbmlib.html">
+      PBMLIB</a>,
+      a C library which
+      reads or writes
+      graphics files in the Portable Bit Map format;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pgma.html">
+      PGMA</a>,
+      a data directory which
+      contains examples of PGMA files,
+      ASCII Portable Gray Map, 2D graphics;
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/ppma.html">
+      PPMA</a>,
+      a data directory which
+      contains examples of PPMA files,
+      Portable Pixel Map (ASCII) 2D graphics, color;
+    </p>
+
+    <h3 align="center">
+      Reference:
+    </h3>
+
+    <p>
+      </p><ol>
+        <li>
+          <a href="http://netpbm.sourceforge.net/">the NETPBM homepage</a>.
+        </li>
+      </ol>
+    <p></p>
+
+    <h3 align="center">
+      Sample Files:
+    </h3>
+
+    <p>
+      All the filenames here include the extension "ascii.pbm".  The "ascii" part
+      just helps me to distinguish these files from their binary versions, and is
+      not required by any program.
+    </p>
+
+    <p>
+      </p><ul>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/circle.ascii.pbm">circle.ascii.pbm</a>,
+          a circle, drawn on a 200 by 200 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/circle.png">circle.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/feep.ascii.pbm">feep.ascii.pbm</a>,
+          the example described above, on a 24 by 7 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/feep.png">feep.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/fool.ascii.pbm">fool.ascii.pbm</a>,
+          a screenshot from "The Fool's Errand".
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/fool.png">fool.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/gerrymander.ascii.pbm">gerrymander.ascii.pbm</a>,
+          an image of the "Gerry-mander", on a 303 by 325 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/gerrymander.png">gerrymander.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/letter_a.ascii.pbm">letter_a.ascii.pbm</a>, a capital A,
+          using a 25 by 25 grid.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/letter_a.png">letter_a.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/scs.ascii.pbm">scs.ascii.pbm</a>,
+          the letters "SCS", on a 136 by 82 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/scs.png">scs.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/seahorse.ascii.pbm">seahorse.ascii.pbm</a>,
+          a seahorse, on a 2225 by 3601 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/seahorse.png">seahorse.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/sierpinski.ascii.pbm">sierpinski.ascii.pbm</a>,
+          the Sierpinski triangle, on a 966 by 860 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/sierpinski.png">sierpinski.png</a>,
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/washington.ascii.pbm">washington.ascii.pbm</a>,
+          a silhouette of George Washington, on a 305 by 400 grid;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/washington.png">washington.png</a>,
+          a PNG version.
+        </li>
+      </ul>
+    <p></p>
+
+    <p>
+      You can go up one level to
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/data.html">the DATA page.</a>
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 11 January 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  
+
+
+
+</body></html>
