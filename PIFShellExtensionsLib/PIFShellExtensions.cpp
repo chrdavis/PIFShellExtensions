@@ -19,7 +19,7 @@ void DllRelease(void)
     InterlockedDecrement(&g_cRef);
 }
 
-CPIFImageExtractor::CPIFImageExtractor() :
+CPIFShellExt::CPIFShellExt() :
     _cRef(1),
     _dwRecClrDepth(0),
     _dwFlags(0),
@@ -32,33 +32,33 @@ CPIFImageExtractor::CPIFImageExtractor() :
     DllAddRef();
 }
 
-CPIFImageExtractor::~CPIFImageExtractor()
+CPIFShellExt::~CPIFShellExt()
 {
     DllRelease();
 }
 
-IFACEMETHODIMP CPIFImageExtractor::QueryInterface(_In_ REFIID riid, _COM_Outptr_ LPVOID *ppvOut)
+IFACEMETHODIMP CPIFShellExt::QueryInterface(_In_ REFIID riid, _COM_Outptr_ LPVOID *ppvOut)
 {
     static const QITAB qit[] = {
-        QITABENT(CPIFImageExtractor, IPersist),
-        QITABENT(CPIFImageExtractor, IPersistFile),
-        QITABENT(CPIFImageExtractor, IDataObject),
-        QITABENT(CPIFImageExtractor, IPropertyStoreFactory),
-        QITABENT(CPIFImageExtractor, IPropertyStore),
-        QITABENT(CPIFImageExtractor, IInitializeWithStream),
-        QITABENT(CPIFImageExtractor, IExtractImage),
-        QITABENT(CPIFImageExtractor, IThumbnailProvider),
+        QITABENT(CPIFShellExt, IPersist),
+        QITABENT(CPIFShellExt, IPersistFile),
+        QITABENT(CPIFShellExt, IDataObject),
+        QITABENT(CPIFShellExt, IPropertyStoreFactory),
+        QITABENT(CPIFShellExt, IPropertyStore),
+        QITABENT(CPIFShellExt, IInitializeWithStream),
+        QITABENT(CPIFShellExt, IExtractImage),
+        QITABENT(CPIFShellExt, IThumbnailProvider),
         { 0 },
     };
     return QISearch(this, qit, riid, ppvOut);
 }
 
-IFACEMETHODIMP_(ULONG) CPIFImageExtractor::AddRef()
+IFACEMETHODIMP_(ULONG) CPIFShellExt::AddRef()
 {
     return InterlockedIncrement(&_cRef);
 }
 
-IFACEMETHODIMP_(ULONG) CPIFImageExtractor::Release()
+IFACEMETHODIMP_(ULONG) CPIFShellExt::Release()
 {
     ULONG cRef = InterlockedDecrement(&_cRef);
     if (cRef == 0)
@@ -69,43 +69,43 @@ IFACEMETHODIMP_(ULONG) CPIFImageExtractor::Release()
 }
 
 // IPersist
-IFACEMETHODIMP CPIFImageExtractor::GetClassID(_Out_ CLSID* pclsid)
+IFACEMETHODIMP CPIFShellExt::GetClassID(_Out_ CLSID* pclsid)
 {
     *pclsid = CLSID_PIFShellExtensions;
     return S_OK;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::IsDirty()
+IFACEMETHODIMP CPIFShellExt::IsDirty()
 {
     // never dirty since we never modify the file
     return S_FALSE;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::Load(LPCOLESTR pszFileName, DWORD)
+IFACEMETHODIMP CPIFShellExt::Load(LPCOLESTR pszFileName, DWORD)
 {
     // Remember the filename so we can render from it later
     HRESULT hr = StringCchCopy(_szTarget, ARRAYSIZE(_szTarget), pszFileName);
     if (SUCCEEDED(hr))
     {
         _spStream = nullptr;
-        hr = SHCreateStreamOnFileEx(pszFileName, STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &_spStream);
+        hr = SHCreateStreamOnFileEx(pszFileName, STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, nullptr, &_spStream);
     }
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::Save(LPCOLESTR, BOOL)
+IFACEMETHODIMP CPIFShellExt::Save(LPCOLESTR, BOOL)
 {
     // We are just an extractor - we can't save anything
     return E_NOTIMPL;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::SaveCompleted(LPCOLESTR)
+IFACEMETHODIMP CPIFShellExt::SaveCompleted(LPCOLESTR)
 {
     // We are just an extractor - we can't save anything
     return E_NOTIMPL;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::GetCurFile(_Outptr_ LPOLESTR* ppszFileName)
+IFACEMETHODIMP CPIFShellExt::GetCurFile(_Outptr_ LPOLESTR* ppszFileName)
 {
     *ppszFileName = nullptr;
     HRESULT hr = E_FAIL;
@@ -118,16 +118,16 @@ IFACEMETHODIMP CPIFImageExtractor::GetCurFile(_Outptr_ LPOLESTR* ppszFileName)
 }
 
 // IDataObject
-IFACEMETHODIMP CPIFImageExtractor::EnumFormatEtc(_In_ DWORD, _COM_Outptr_ IEnumFORMATETC** ppiefe)
+IFACEMETHODIMP CPIFShellExt::EnumFormatEtc(_In_ DWORD, _COM_Outptr_ IEnumFORMATETC** ppiefe)
 {
     FORMATETC rgfmtetc[] =
     {
-        { CF_BITMAP, NULL, DVASPECT_CONTENT, -1, TYMED_GDI },
+        { CF_BITMAP, nullptr, DVASPECT_CONTENT, -1, TYMED_GDI },
     };
     return SHCreateStdEnumFmtEtc(ARRAYSIZE(rgfmtetc), rgfmtetc, ppiefe);
 }
 
-IFACEMETHODIMP CPIFImageExtractor::QueryGetData(_In_ FORMATETC* pfe)
+IFACEMETHODIMP CPIFShellExt::QueryGetData(_In_ FORMATETC* pfe)
 {
     HRESULT hr = pfe ? S_OK : E_POINTER;
     if (SUCCEEDED(hr))
@@ -149,7 +149,7 @@ IFACEMETHODIMP CPIFImageExtractor::QueryGetData(_In_ FORMATETC* pfe)
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::GetData(_In_ FORMATETC* pformatetcIn, _Out_ STGMEDIUM* pmedium)
+IFACEMETHODIMP CPIFShellExt::GetData(_In_ FORMATETC* pformatetcIn, _Out_ STGMEDIUM* pmedium)
 {
     HRESULT hr = DV_E_FORMATETC;
     if ((pformatetcIn->tymed & TYMED_GDI) && (pformatetcIn->cfFormat & CF_BITMAP))
@@ -176,7 +176,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetData(_In_ FORMATETC* pformatetcIn, _Out_ S
 }
 
 // IPropertyStore
-IFACEMETHODIMP CPIFImageExtractor::GetCount(_Out_ DWORD* pcProps)
+IFACEMETHODIMP CPIFShellExt::GetCount(_Out_ DWORD* pcProps)
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -186,7 +186,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetCount(_Out_ DWORD* pcProps)
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::GetAt(_In_ DWORD iProp, _Outptr_ PROPERTYKEY* pkey)
+IFACEMETHODIMP CPIFShellExt::GetAt(_In_ DWORD iProp, _Outptr_ PROPERTYKEY* pkey)
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -196,7 +196,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetAt(_In_ DWORD iProp, _Outptr_ PROPERTYKEY*
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::GetValue(_In_ REFPROPERTYKEY key, _Outptr_ PROPVARIANT* pPropVar)
+IFACEMETHODIMP CPIFShellExt::GetValue(_In_ REFPROPERTYKEY key, _Outptr_ PROPVARIANT* pPropVar)
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -206,7 +206,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetValue(_In_ REFPROPERTYKEY key, _Outptr_ PR
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::SetValue(_In_ REFPROPERTYKEY key, _In_ REFPROPVARIANT propVar)
+IFACEMETHODIMP CPIFShellExt::SetValue(_In_ REFPROPERTYKEY key, _In_ REFPROPVARIANT propVar)
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -216,7 +216,7 @@ IFACEMETHODIMP CPIFImageExtractor::SetValue(_In_ REFPROPERTYKEY key, _In_ REFPRO
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::Commit()
+IFACEMETHODIMP CPIFShellExt::Commit()
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -227,7 +227,7 @@ IFACEMETHODIMP CPIFImageExtractor::Commit()
 }
 
 // IPropertyStoreFactory
-IFACEMETHODIMP CPIFImageExtractor::GetPropertyStore(
+IFACEMETHODIMP CPIFShellExt::GetPropertyStore(
     _In_ GETPROPERTYSTOREFLAGS flags,
     _In_opt_ IUnknown* punk,
     _In_ REFIID riid,
@@ -246,7 +246,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetPropertyStore(
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::GetPropertyStoreForKeys(
+IFACEMETHODIMP CPIFShellExt::GetPropertyStoreForKeys(
     _In_reads_opt_(cKeys) const PROPERTYKEY* rgKeys,
     _In_ UINT cKeys,
     _In_ GETPROPERTYSTOREFLAGS flags,
@@ -268,7 +268,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetPropertyStoreForKeys(
 
 
 // IInitializeWithStream
-IFACEMETHODIMP CPIFImageExtractor::Initialize(_In_ IStream* pStream, _In_ DWORD grfMode)
+IFACEMETHODIMP CPIFShellExt::Initialize(_In_ IStream* pStream, _In_ DWORD grfMode)
 {
     _spStream = pStream;
     _grfMode = grfMode;
@@ -276,7 +276,7 @@ IFACEMETHODIMP CPIFImageExtractor::Initialize(_In_ IStream* pStream, _In_ DWORD 
 }
 
 // IExtractImage
-IFACEMETHODIMP CPIFImageExtractor::GetLocation(
+IFACEMETHODIMP CPIFShellExt::GetLocation(
     _Out_writes_(cchMax) PWSTR pszFileName,
     DWORD cchMax,
     _Out_ DWORD* pdwPriority,
@@ -322,7 +322,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetLocation(
     return hr;
 }
 
-IFACEMETHODIMP CPIFImageExtractor::Extract(_Out_ HBITMAP* phBmpImage)
+IFACEMETHODIMP CPIFShellExt::Extract(_Out_ HBITMAP* phBmpImage)
 {
     *phBmpImage = nullptr;
     HRESULT hr = S_OK;
@@ -381,7 +381,7 @@ IFACEMETHODIMP CPIFImageExtractor::Extract(_Out_ HBITMAP* phBmpImage)
 }
 
 // IThumbnailProvider
-IFACEMETHODIMP CPIFImageExtractor::GetThumbnail(
+IFACEMETHODIMP CPIFShellExt::GetThumbnail(
     _In_ UINT cx,
     _Out_ HBITMAP* phbmp,
     _Out_ WTS_ALPHATYPE* pdwAlpha)
@@ -408,7 +408,7 @@ IFACEMETHODIMP CPIFImageExtractor::GetThumbnail(
     return hr;
 }
 
-HRESULT CPIFImageExtractor::_EnsurePropertyStore()
+HRESULT CPIFShellExt::_EnsurePropertyStore()
 {
     HRESULT hr = S_OK;
     if (_spPropertyStore == nullptr)
@@ -428,7 +428,7 @@ HRESULT CPIFImageExtractor::_EnsurePropertyStore()
     return hr;
 }
 
-HRESULT CPIFImageExtractor::_InitializeProperties()
+HRESULT CPIFShellExt::_InitializeProperties()
 {
     HRESULT hr = _spPropertyStore ? S_OK : E_FAIL;
     if (SUCCEEDED(hr) && !_fPropertiesInitialized)
@@ -541,9 +541,9 @@ HRESULT CPIFFactory::CreateInstance(_In_ IUnknown* punkOuter, _In_ REFIID riid, 
     HRESULT hr;
     *ppvOut = nullptr;
 
-    if (punkOuter == NULL)
+    if (punkOuter == nullptr)
     {
-        CPIFImageExtractor *pobj = new CPIFImageExtractor();
+        CPIFShellExt *pobj = new CPIFShellExt();
         if (pobj)
         {
             hr = pobj->QueryInterface(riid, ppvOut);

@@ -33,16 +33,18 @@ namespace PIFShellExtensionsTests
             CComPtr<IStream> spStream;
             Assert::IsTrue(SHCreateStreamOnFileEx(SZ_ROOT_TEST_FOLDER L"PBMA\\fool.ascii.pbm", STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &spStream) == S_OK);
 
-            CPIFImageExtractor* pPIFImageExtractor = new CPIFImageExtractor();
-            Assert::IsNotNull(pPIFImageExtractor);
+            CPIFShellExt* pPIFShellExt = new CPIFShellExt();
+            Assert::IsNotNull(pPIFShellExt);
 
             CComPtr<IInitializeWithStream> spInitWithStream;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spInitWithStream)) == S_OK);
+            Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spInitWithStream)) == S_OK);
 
             Assert::IsTrue(spInitWithStream->Initialize(spStream, STGM_READ) == S_OK);
 
             CComPtr<IDataObject> spDataObject;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spDataObject)) == S_OK);
+            Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spDataObject)) == S_OK);
+
+            pPIFShellExt->Release();
         }
 
 

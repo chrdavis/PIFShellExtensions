@@ -174,18 +174,18 @@ namespace PIFShellExtensionsTests
 
     void VerifyLoadFileArrayViaExtract(_In_ DWORD dwWidth, _In_ DWORD dwHeight, _In_ DWORD dwCount, _In_ PCWSTR* rgFilePaths)
     {
-        CPIFImageExtractor* pPIFImageExtractor = new CPIFImageExtractor();
-        Assert::IsNotNull(pPIFImageExtractor);
+        CPIFShellExt* pPIFShellExt = new CPIFShellExt();
+        Assert::IsNotNull(pPIFShellExt);
 
         CComPtr<IPersistFile> spPersistFile;
-        Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spPersistFile)) == S_OK);
+        Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spPersistFile)) == S_OK);
 
         for (DWORD i = 0; i < dwCount; i++)
         {
             Assert::IsTrue(spPersistFile->Load(rgFilePaths[i], 0) == S_OK);
 
             CComPtr<IExtractImage> spImageExtractor;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spImageExtractor)) == S_OK);
+            Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spImageExtractor)) == S_OK);
 
             DWORD dwPriority = 0;
             DWORD dwColorDepth = 32;
@@ -219,15 +219,15 @@ namespace PIFShellExtensionsTests
             DeleteObject(hBitmap);
         }
 
-        pPIFImageExtractor->Release();
+        pPIFShellExt->Release();
     }
 
     void VerifyLoadFileArrayViaGetThumbnail(_In_ DWORD dwWidth, _In_ DWORD dwHeight, _In_ DWORD dwCount, _In_ PCWSTR* rgFilePaths)
     {
         CreateDirectory(g_pszTestOutputFolder, nullptr);
 
-        CPIFImageExtractor* pPIFImageExtractor = new CPIFImageExtractor();
-        Assert::IsNotNull(pPIFImageExtractor);
+        CPIFShellExt* pPIFShellExt = new CPIFShellExt();
+        Assert::IsNotNull(pPIFShellExt);
 
         for (DWORD i = 0; i < dwCount; i++)
         {
@@ -235,12 +235,12 @@ namespace PIFShellExtensionsTests
             Assert::IsTrue(SHCreateStreamOnFileEx(rgFilePaths[i], STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &spStream) == S_OK);
 
             CComPtr<IInitializeWithStream> spInitWithStream;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spInitWithStream)) == S_OK);
+            Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spInitWithStream)) == S_OK);
 
             Assert::IsTrue(spInitWithStream->Initialize(spStream, STGM_READ) == S_OK);
 
             CComPtr<IThumbnailProvider> spThumbnailProvider;
-            Assert::IsTrue(pPIFImageExtractor->QueryInterface(IID_PPV_ARGS(&spThumbnailProvider)) == S_OK);
+            Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spThumbnailProvider)) == S_OK);
 
             HBITMAP hBitmap;
             WTS_ALPHATYPE wts_alphatype;
@@ -252,7 +252,7 @@ namespace PIFShellExtensionsTests
             Assert::IsNotNull(image);
 
             CLSID myClsId;
-            int retVal = GetEncoderClsid(L"image/bmp", &myClsId);
+            GetEncoderClsid(L"image/bmp", &myClsId);
 
             wchar_t pathOutputFile[MAX_PATH] = { 0 };
             StringCchPrintf(pathOutputFile, ARRAYSIZE(pathOutputFile), L"%s\\%s_Thumbnail.bmp", g_szPathOut, PathFindFileName(rgFilePaths[i]));
@@ -262,7 +262,7 @@ namespace PIFShellExtensionsTests
             DeleteObject(hBitmap);
         }
 
-        pPIFImageExtractor->Release();
+        pPIFShellExt->Release();
     }
 
     TEST_CLASS(ThumbnailUnitTests)

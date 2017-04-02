@@ -22,7 +22,7 @@ extern LONG g_cRef;
 *      Portable Image Format Shell Extensions
 *
 *****************************************************************************/
-class CPIFImageExtractor :
+class CPIFShellExt :
     public IPersistFile,
     public IDataObject,
     public IPropertyStoreFactory,
@@ -32,7 +32,7 @@ class CPIFImageExtractor :
     public IThumbnailProvider
 {
 public:
-    CPIFImageExtractor();
+    CPIFShellExt();
 
     // IUnknown
     IFACEMETHODIMP QueryInterface(_In_ REFIID riid, _COM_Outptr_ LPVOID* ppvOut);
@@ -100,7 +100,7 @@ public:
         _Out_ WTS_ALPHATYPE* pdwAlpha);
 
 private:
-    ~CPIFImageExtractor();
+    ~CPIFShellExt();
 
     HRESULT _EnsurePropertyStore();
     HRESULT _InitializeProperties();
