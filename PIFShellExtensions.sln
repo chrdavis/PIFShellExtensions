@@ -16,11 +16,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensionsTests", "
 		{73E69D94-C385-4703-AD0B-BB2FE6905F46} = {73E69D94-C385-4703-AD0B-BB2FE6905F46}
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup", "PIFShellExtensionsInstaller\PIFShellExtensionsInstaller.vdproj", "{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}"
-	ProjectSection(ProjectDependencies) = postProject
-		{D310541A-4178-43C1-91A1-EDDA0D173FC1} = {D310541A-4178-43C1-91A1-EDDA0D173FC1}
-		{73E69D94-C385-4703-AD0B-BB2FE6905F46} = {73E69D94-C385-4703-AD0B-BB2FE6905F46}
-	EndProjectSection
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup64", "PIFShellExtensionsInstaller\PIFShellExtensionsInstaller32.vdproj", "{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup32", "PIFShellExtensionsInstaller\PIFShellExtensionsInstaller64.vdproj", "{22F6343A-EA1E-4301-A866-4D3E02BD8F57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,14 +53,22 @@ Global
 		{8E105821-E661-439F-BB4D-0745753A8CDA}.Release|x64.Build.0 = Release|x64
 		{8E105821-E661-439F-BB4D-0745753A8CDA}.Release|x86.ActiveCfg = Release|Win32
 		{8E105821-E661-439F-BB4D-0745753A8CDA}.Release|x86.Build.0 = Release|Win32
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Debug|x64.ActiveCfg = Debug
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Debug|x64.Build.0 = Debug
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Debug|x86.ActiveCfg = Debug
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Debug|x86.Build.0 = Debug
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Release|x64.ActiveCfg = Release
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Release|x64.Build.0 = Release
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Release|x86.ActiveCfg = Release
-		{9B2DBEDF-69D5-443F-AA79-6B83AA2BA7A3}.Release|x86.Build.0 = Release
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Debug|x64.ActiveCfg = Debug
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Debug|x64.Build.0 = Debug
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Debug|x86.ActiveCfg = Debug
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Debug|x86.Build.0 = Debug
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Release|x64.ActiveCfg = Release
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Release|x64.Build.0 = Release
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Release|x86.ActiveCfg = Release
+		{666E1DAB-6CE5-4F12-ACBA-72DA2295D8A5}.Release|x86.Build.0 = Release
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Debug|x64.ActiveCfg = Debug
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Debug|x64.Build.0 = Debug
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Debug|x86.ActiveCfg = Debug
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Debug|x86.Build.0 = Debug
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Release|x64.ActiveCfg = Release
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Release|x64.Build.0 = Release
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Release|x86.ActiveCfg = Release
+		{22F6343A-EA1E-4301-A866-4D3E02BD8F57}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
