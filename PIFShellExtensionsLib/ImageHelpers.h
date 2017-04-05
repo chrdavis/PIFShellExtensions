@@ -54,8 +54,7 @@ public:
         _Outptr_ BYTE** ppData);
     static HRESULT ReadLineFromStream(
         _In_ IStream* pStream,
-        _In_ UINT uCount,
-        _Inout_count_(uCount) char* buffer);
+        _Outptr_ char** ppBuffer);
     static HRESULT ParseImageLineForNum(
         _In_ IStream* pStream,
         _In_ PCSTR format,

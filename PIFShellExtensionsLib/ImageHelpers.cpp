@@ -44,6 +44,7 @@ HRESULT CPIFImageHelpers::GetBitmapFromStream(
     _Out_ UINT* puHeight,
     _Out_ HBITMAP* phbmp)
 {
+    *phbmp = nullptr;
     UINT uMax = 0;
     PortableImageFormatType formatType = PortableImageFormatType_Invalid;
     BYTE* pb = nullptr;
@@ -266,9 +267,9 @@ bool IsWhitespace(_In_ char ch)
 
 HRESULT CPIFImageHelpers::ReadLineFromStream(
     _In_ IStream* pStream,
-    _In_ UINT uCount,
-    _Inout_count_(uCount) char* buffer)
+    _Outptr_ char** ppBuffer)
 {
+    *ppBuffer = nullptr;
     // Get the current seek position, so we can go back to the beginning and read it in one
     // call so we know the size of the buffer to create.
     ULARGE_INTEGER uliOriginSeek;
@@ -317,19 +318,33 @@ HRESULT CPIFImageHelpers::ReadLineFromStream(
                     if (SUCCEEDED(hr))
                     {
                         UINT uBufferSize = uliCurrentSeek.LowPart - uliOriginSeek.LowPart;
-                        hr = uBufferSize < uCount ? S_OK : E_OUTOFMEMORY;
+                        hr = uBufferSize > 0 ? S_OK : E_FAIL;
                         if (SUCCEEDED(hr))
                         {
-                            // Ensure zero terminated
-                            buffer[uBufferSize] = '\0';
-                            // Reset the stream to the origin
-                            LARGE_INTEGER seekSet = { 0 };
-                            seekSet.LowPart = uliOriginSeek.LowPart;
-                            seekSet.HighPart = uliOriginSeek.HighPart;
-                            hr = pStream->Seek(seekSet, STREAM_SEEK_SET, nullptr);
+                            char* pBuffer = new char[uBufferSize];
+                            hr = pBuffer ? S_OK : E_OUTOFMEMORY;
                             if (SUCCEEDED(hr))
                             {
-                                hr = IStream_Read(pStream, (void*)buffer, sizeof(char) * uBufferSize);
+                                // Ensure zero terminated
+                                *pBuffer = '\0';
+                                // Reset the stream to the origin
+                                LARGE_INTEGER seekSet = { 0 };
+                                seekSet.LowPart = uliOriginSeek.LowPart;
+                                seekSet.HighPart = uliOriginSeek.HighPart;
+                                hr = pStream->Seek(seekSet, STREAM_SEEK_SET, nullptr);
+                                if (SUCCEEDED(hr))
+                                {
+                                    hr = IStream_Read(pStream, (void*)pBuffer, sizeof(char) * uBufferSize);
+                                }
+
+                                if (SUCCEEDED(hr))
+                                {
+                                    *ppBuffer = pBuffer;
+                                }
+                                else
+                                {
+                                    delete [] pBuffer;
+                                }
                             }
                         }
                     }
@@ -340,9 +355,6 @@ HRESULT CPIFImageHelpers::ReadLineFromStream(
     return hr;
 }
 
-// Max header line can be 70 characters in length.  Rounding up just in case.
-#define MAX_HEADER_BUFFER 100
-
 HRESULT CPIFImageHelpers::ParseImageLineForNum(
     _In_ IStream* pStream,
     _In_ PCSTR pszFormat,
@@ -350,17 +362,20 @@ HRESULT CPIFImageHelpers::ParseImageLineForNum(
 {
     *value = 0;
     HRESULT hr = S_OK;
-    char buffer[MAX_HEADER_BUFFER] = { 0 };
+    char* pBuffer = nullptr;
     while (SUCCEEDED(hr) && *value == 0)
     {
-        hr = ReadLineFromStream(pStream, ARRAYSIZE(buffer), buffer);
+        hr = ReadLineFromStream(pStream, &pBuffer);
         if (SUCCEEDED(hr))
         {
             // Skip comment lines
-            if (*buffer != '#')
+            if (*pBuffer != '#')
             {
-                hr = (sscanf_s(buffer, pszFormat, value) == 1) ? S_OK : E_FAIL;
+                hr = (sscanf_s(pBuffer, pszFormat, value) == 1) ? S_OK : E_FAIL;
             }
+
+            delete [] pBuffer;
+            pBuffer = nullptr;
         }
     }
 
@@ -549,21 +564,21 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
                     hr = IStream_Size(pStream, &dataSize);
                     if (SUCCEEDED(hr))
                     {
-                        // We need to take into account spaces
+                        // We need to take into account spaces between pixel data.  Typically we will have
+                        // to account for > 2.5x sizeAlloc to account for the extra spaces
                         char* pAsciiData = new char[dataSize.LowPart];
                         hr = pAsciiData ? S_OK : E_OUTOFMEMORY;
                         if (SUCCEEDED(hr))
                         {
+                            BYTE* pDataCurr = pData;
                             ZeroMemory(pAsciiData, sizeof(char) * dataSize.LowPart);
                             hr = pStream->Read((void*)pAsciiData, sizeof(char) * (dataSize.LowPart - 1), &cbRead);
                             if (SUCCEEDED(hr))
                             {
-                                hr = S_OK;
                                 char* pCurrNumStart = pAsciiData;
                                 char* pCurrNumEnd = pAsciiData;
-                                BYTE* pDataCurr = pData;
 
-                                while (pCurrNumStart && *pCurrNumStart != '\0')
+                                while (SUCCEEDED(hr) && pCurrNumStart && *pCurrNumStart != '\0')
                                 {
                                     // First walk any leading whitespace
                                     while (IsWhitespace(*pCurrNumStart))
@@ -584,9 +599,14 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
                                         pCurrNumEnd && *pCurrNumEnd != '\0')
                                     {
                                         *pCurrNumEnd = '\0';
-                                        *pDataCurr = static_cast<BYTE>(atoi(pCurrNumStart));
-                                        // Move our insertion pointer for the data
-                                        pDataCurr++;
+
+                                        hr = ((pDataCurr - pData) < sizeAlloc) ? S_OK : E_FAIL;
+                                        if (SUCCEEDED(hr))
+                                        {
+                                            *pDataCurr = static_cast<BYTE>(atoi(pCurrNumStart));
+                                            // Move our insertion pointer for the data
+                                            pDataCurr++;
+                                        }
                                     }
 
                                     // Set our two pointers to the next value
@@ -595,6 +615,13 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
                                         pCurrNumEnd++;
                                         pCurrNumStart = pCurrNumEnd;
                                     }
+                                }
+
+                                if (SUCCEEDED(hr))
+                                {
+                                    // Did we read the expected ammount of data?
+                                    hr = (((pDataCurr - pData) == sizeAlloc - 1) ||
+                                          ((pDataCurr - pData) == sizeAlloc)) ? S_OK : E_FAIL;
                                 }
                             }
                             delete[] pAsciiData;

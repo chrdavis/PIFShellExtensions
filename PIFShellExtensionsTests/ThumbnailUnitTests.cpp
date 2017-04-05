@@ -9,8 +9,10 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 //
 // READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS//
+//
 // Be sure to move the Test Data folder in this project to a known location like below
 // or change the below path.
+//
 // READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS//
 //
 
@@ -45,7 +47,6 @@ namespace PIFShellExtensionsTests
         SZ_ROOT_TEST_FOLDER L"PPMA\\sines.ascii.ppm",
         SZ_ROOT_TEST_FOLDER L"PPMA\\snail.ascii.ppm"
     };
-
 
     PCWSTR g_rgPGMATestFiles[] =
     {
@@ -142,6 +143,30 @@ namespace PIFShellExtensionsTests
         SZ_ROOT_TEST_FOLDER L"PGMB\\snap.pgm"
     };
 
+    struct TestFilePathWithResult
+    {
+        PCWSTR path;
+        HRESULT result;
+    };
+
+    TestFilePathWithResult g_rgInvalidTestFilesWithResult[] =
+    {
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\sines.ascii_reallylongcomments.ppm", S_OK },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\snail.ascii_invalidP9.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\blackbuck.ascii_too_little_image_data.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\blackbuck.ascii_too_much_data.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\feep.ascii_justcomment.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\feep.ascii_multiple_image_types.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\feep.ascii_nowidthheightmaxdata.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\noextensionppm", S_OK },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\pbmlib.ascii_noimagedata.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\sines.ascii_incorrect_max_value.ppm", S_OK },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\sines.ascii_incorrect_width_height_too_large.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\sines.ascii_incorrect_width_height_too_small.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\sines.ascii_incorrect_width_height_zero.ppm", E_FAIL },
+        { SZ_ROOT_TEST_FOLDER L"InvalidFiles\\sines.ascii_invalid_file_type.ppm", E_FAIL },
+    };
+
     int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
     {
         UINT  num = 0;          // number of image encoders
@@ -208,6 +233,9 @@ namespace PIFShellExtensionsTests
             Bitmap *image = new Bitmap(hBitmap, NULL);
             Assert::IsNotNull(image);
 
+            // Verify Width and Height
+            Assert::IsTrue(image->GetWidth() <= dwWidth && image->GetHeight() <= dwHeight);
+
             CLSID myClsId;
             GetEncoderClsid(L"image/bmp", &myClsId);
 
@@ -224,8 +252,6 @@ namespace PIFShellExtensionsTests
 
     void VerifyLoadFileArrayViaGetThumbnail(_In_ DWORD dwWidth, _In_ DWORD dwHeight, _In_ DWORD dwCount, _In_ PCWSTR* rgFilePaths)
     {
-        CreateDirectory(g_pszTestOutputFolder, nullptr);
-
         CPIFShellExt* pPIFShellExt = new CPIFShellExt();
         Assert::IsNotNull(pPIFShellExt);
 
@@ -250,6 +276,9 @@ namespace PIFShellExtensionsTests
 
             Bitmap *image = new Bitmap(hBitmap, NULL);
             Assert::IsNotNull(image);
+
+            // Verify Width and Height
+            Assert::IsTrue(image->GetWidth() <= dwWidth && image->GetHeight() <= dwHeight);
 
             CLSID myClsId;
             GetEncoderClsid(L"image/bmp", &myClsId);
@@ -351,6 +380,53 @@ namespace PIFShellExtensionsTests
         TEST_METHOD(SimplePGMBGetThumbnailTest)
         {
             VerifyLoadFileArrayViaGetThumbnail(500, 500, ARRAYSIZE(g_rgPGMBTestFiles), g_rgPGMBTestFiles);
+        }
+
+        // TODO: small size, zero size, different size
+        TEST_METHOD(OnePixelThumbnailTest)
+        {
+            VerifyLoadFileArrayViaGetThumbnail(1, 1, ARRAYSIZE(g_rgPGMBTestFiles), g_rgPGMBTestFiles);
+        }
+
+        TEST_METHOD(OnePixelThumbnailTest)
+        {
+            VerifyLoadFileArrayViaGetThumbnail(0, 0, ARRAYSIZE(g_rgPGMBTestFiles), g_rgPGMBTestFiles);
+        }
+
+        TEST_METHOD(InvalidPPMATests)
+        {
+            CPIFShellExt* pPIFShellExt = new CPIFShellExt();
+            Assert::IsNotNull(pPIFShellExt);
+
+            for (DWORD i = 0; i < ARRAYSIZE(g_rgInvalidTestFilesWithResult); i++)
+            {
+                CComPtr<IStream> spStream;
+                Assert::IsTrue(SHCreateStreamOnFileEx(g_rgInvalidTestFilesWithResult[i].path, STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &spStream) == S_OK);
+
+                CComPtr<IInitializeWithStream> spInitWithStream;
+                Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spInitWithStream)) == S_OK);
+
+                Assert::IsTrue(spInitWithStream->Initialize(spStream, STGM_READ) == S_OK);
+
+                CComPtr<IThumbnailProvider> spThumbnailProvider;
+                Assert::IsTrue(pPIFShellExt->QueryInterface(IID_PPV_ARGS(&spThumbnailProvider)) == S_OK);
+
+                HBITMAP hBitmap;
+                WTS_ALPHATYPE wts_alphatype;
+                Assert::IsTrue(spThumbnailProvider->GetThumbnail(500, &hBitmap, &wts_alphatype) == g_rgInvalidTestFilesWithResult[i].result);
+
+                if (FAILED(g_rgInvalidTestFilesWithResult[i].result))
+                {
+                    Assert::IsNull(hBitmap);
+                }
+                else
+                {
+                    Assert::IsNotNull(hBitmap);
+                    DeleteObject(hBitmap);
+                }
+            }
+
+            pPIFShellExt->Release();
         }
 
         // TODO:
