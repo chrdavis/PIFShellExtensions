@@ -28,6 +28,7 @@ public:
         _Out_ HBITMAP* phbmp);
     static HRESULT CreateBitmapFromBytes(
         _In_ BYTE* data,
+        _In_ UINT uDataLen,
         _In_ PortableImageFormatType formatType,
         _In_ UINT uWidth,
         _In_ UINT uHeight,
@@ -49,6 +50,7 @@ public:
         _Out_ UINT* puWidth,
         _Out_ UINT* puHeight,
         _Out_ UINT* puMax,
+        _Out_ UINT* puDataLen,
         _Outptr_ BYTE** ppData);
     static HRESULT ReadLineFromStream(
         _In_ IStream* pStream,
@@ -58,6 +60,24 @@ public:
         _In_ IStream* pStream,
         _In_ PCSTR format,
         _Out_ UINT* value);
+    static HRESULT PopulateBitmapFromBytesPPM(
+        _In_ BYTE* data,
+        _In_ UINT uDataLen,
+        _In_ UINT uWidth,
+        _In_ UINT uHeight,
+        _In_ Gdiplus::Bitmap* pBitmap);
+    static HRESULT PopulateBitmapFromBytesPGM(
+        _In_ BYTE* data,
+        _In_ UINT uDataLen,
+        _In_ UINT uWidth,
+        _In_ UINT uHeight,
+        _In_ Gdiplus::Bitmap* pBitmap);
+    static HRESULT PopulateBitmapFromBytesPBM(
+        _In_ BYTE* data,
+        _In_ UINT uDataLen,
+        _In_ UINT uWidth,
+        _In_ UINT uHeight,
+        _In_ Gdiplus::Bitmap* pBitmap);
 
     Gdiplus::GdiplusStartupInput _gdiPlusStatupInput;
     ULONG_PTR _gdiPlusToken;

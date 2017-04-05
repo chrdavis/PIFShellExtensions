@@ -8,13 +8,13 @@ const LARGE_INTEGER c_liZero = { 0, 0 };
 
 CPIFImageHelpers::CPIFImageHelpers()
 {
-    Gdiplus::GdiplusStartupInput gdiPlusStatupInput;
-    Gdiplus::GdiplusStartup(&_gdiPlusToken, &gdiPlusStatupInput, nullptr);
+    GdiplusStartupInput gdiPlusStatupInput;
+    GdiplusStartup(&_gdiPlusToken, &gdiPlusStatupInput, nullptr);
 }
 
 CPIFImageHelpers::~CPIFImageHelpers()
 {
-    Gdiplus::GdiplusShutdown(_gdiPlusToken);
+    GdiplusShutdown(_gdiPlusToken);
 }
 
 UINT CPIFImageHelpers::BitDepthFromPIFType(_In_ PortableImageFormatType formatType)
@@ -47,11 +47,12 @@ HRESULT CPIFImageHelpers::GetBitmapFromStream(
     UINT uMax = 0;
     PortableImageFormatType formatType = PortableImageFormatType_Invalid;
     BYTE* pb = nullptr;
+    UINT uDataLen = 0;
 
-    HRESULT hr = ReadImageFromStream(pStream, &formatType, puWidth, puHeight, &uMax, &pb);
+    HRESULT hr = ReadImageFromStream(pStream, &formatType, puWidth, puHeight, &uMax, &uDataLen, &pb);
     if (SUCCEEDED(hr))
     {
-        hr = CreateBitmapFromBytes(pb, formatType, *puWidth, *puHeight, phbmp);
+        hr = CreateBitmapFromBytes(pb, uDataLen, formatType, *puWidth, *puHeight, phbmp);
         delete[] pb;
     }
 
@@ -66,7 +67,7 @@ HRESULT CPIFImageHelpers::ResizeBitmap(
 {
     *phbmpResized = nullptr;
 
-    Gdiplus::Bitmap *pBitmap = new Gdiplus::Bitmap(hbmpOriginal, nullptr);
+    Bitmap *pBitmap = new Bitmap(hbmpOriginal, nullptr);
     HRESULT hr = pBitmap ? S_OK : E_OUTOFMEMORY;
     if (SUCCEEDED(hr))
     {
@@ -133,8 +134,85 @@ HRESULT CPIFImageHelpers::ResizeBitmap(
     return hr;
 }
 
+HRESULT CPIFImageHelpers::PopulateBitmapFromBytesPPM(
+    _In_ BYTE* data,
+    _In_ UINT uDataLen,
+    _In_ UINT uWidth,
+    _In_ UINT uHeight,
+    _In_ Bitmap* pBitmap)
+{
+    HRESULT hr = (uWidth * uHeight * 3 == uDataLen) ? S_OK : E_INVALIDARG;
+    if (SUCCEEDED(hr))
+    {
+        BYTE *pCurr = data;
+        for (UINT row = 0; row < uHeight; row++)
+        {
+            for (UINT col = 0; col < uWidth; col++)
+            {
+                // Color RGB values
+                pBitmap->SetPixel(col, row, Color(pCurr[0], pCurr[1], pCurr[2]));
+                pCurr += 3;
+            }
+        }
+    }
+
+    return hr;
+}
+
+HRESULT CPIFImageHelpers::PopulateBitmapFromBytesPGM(
+    _In_ BYTE* data,
+    _In_ UINT uDataLen,
+    _In_ UINT uWidth,
+    _In_ UINT uHeight,
+    _In_ Bitmap* pBitmap)
+{
+    HRESULT hr = (uWidth * uHeight == uDataLen) ? S_OK : E_INVALIDARG;
+    if (SUCCEEDED(hr))
+    {
+        BYTE *pCurr = data;
+        for (UINT row = 0; row < uHeight; row++)
+        {
+            for (UINT col = 0; col < uWidth; col++)
+            {
+                // Grayscale values
+                pBitmap->SetPixel(col, row, Color(pCurr[0], pCurr[0], pCurr[0]));
+                pCurr += 1;
+            }
+        }
+    }
+
+    return hr;
+}
+
+HRESULT CPIFImageHelpers::PopulateBitmapFromBytesPBM(
+    _In_ BYTE* data,
+    _In_ UINT uDataLen,
+    _In_ UINT uWidth,
+    _In_ UINT uHeight,
+    _In_ Bitmap* pBitmap)
+{
+    HRESULT hr = (uWidth * uHeight == uDataLen) ? S_OK : E_INVALIDARG;
+    if (SUCCEEDED(hr))
+    {
+        BYTE *pCurr = data;
+        for (UINT row = 0; row < uHeight; row++)
+        {
+            for (UINT col = 0; col < uWidth; col++)
+            {
+                // In this format 0=white and 1=black.
+                BYTE curr = (pCurr[0] == 0 ? 255 : 0);
+                pBitmap->SetPixel(col, row, Color(curr, curr, curr));
+                pCurr += 1;
+            }
+        }
+    }
+
+    return hr;
+}
+
 HRESULT CPIFImageHelpers::CreateBitmapFromBytes(
     _In_ BYTE* data,
+    _In_ UINT uDataLen,
     _In_ PortableImageFormatType formatType,
     _In_ UINT uWidth,
     _In_ UINT uHeight,
@@ -142,43 +220,28 @@ HRESULT CPIFImageHelpers::CreateBitmapFromBytes(
 {
     *phBitmap = nullptr;
 
-    Gdiplus::Bitmap *pBitmap = new Gdiplus::Bitmap(uWidth, uHeight, PixelFormat24bppRGB);
+    Bitmap *pBitmap = new Bitmap(uWidth, uHeight, PixelFormat24bppRGB);
     HRESULT hr = pBitmap ? S_OK : E_OUTOFMEMORY;
     if (SUCCEEDED(hr))
     {
-        BYTE *pCurr = data;
-        for (UINT row = 0; row < pBitmap->GetHeight(); row++)
+        if ((formatType == PortableImageFormatType_PPMB) ||
+            (formatType == PortableImageFormatType_PPMA))
         {
-            for (UINT col = 0; col < pBitmap->GetWidth(); col++)
-            {
-                if ((formatType == PortableImageFormatType_PPMB) ||
-                    (formatType == PortableImageFormatType_PPMA))
-                {
-                    // Color RGB values
-                    pBitmap->SetPixel(col, row, Color(pCurr[0], pCurr[1], pCurr[2]));
-                    pCurr += 3;
-                }
-                else if ((formatType == PortableImageFormatType_PGMB) ||
-                    (formatType == PortableImageFormatType_PGMA))
-                {
-                    // Grayscale values
-                    pBitmap->SetPixel(col, row, Color(pCurr[0], pCurr[0], pCurr[0]));
-                    pCurr += 1;
-                }
-                else if ((formatType == PortableImageFormatType_PBMA) ||
-                    (formatType == PortableImageFormatType_PBMB))
-                {
-                    // In this format 0=white and 1=black.
-                    BYTE curr = (pCurr[0] == 0 ? 255 : 0);
-                    pBitmap->SetPixel(col, row, Color(curr, curr, curr));
-                    pCurr += 1;
-                }
-                else
-                {
-                    hr = E_INVALIDARG;
-                    break;
-                }
-            }
+            hr = PopulateBitmapFromBytesPPM(data, uDataLen, uWidth, uHeight, pBitmap);
+        }
+        else if ((formatType == PortableImageFormatType_PGMB) ||
+            (formatType == PortableImageFormatType_PGMA))
+        {
+            hr = PopulateBitmapFromBytesPGM(data, uDataLen, uWidth, uHeight, pBitmap);
+        }
+        else if ((formatType == PortableImageFormatType_PBMA) ||
+            (formatType == PortableImageFormatType_PBMB))
+        {
+            hr = PopulateBitmapFromBytesPBM(data, uDataLen, uWidth, uHeight, pBitmap);
+        }
+        else
+        {
+            hr = E_INVALIDARG;
         }
 
         if (SUCCEEDED(hr))
@@ -366,12 +429,14 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
     _Out_ UINT* puWidth,
     _Out_ UINT* puHeight,
     _Out_ UINT* puMax,
+    _Out_ UINT* puDataLen,
     _Outptr_ BYTE** ppData)
 {
     *pFormatType = PortableImageFormatType_Invalid;
     *puWidth = 0;
     *puHeight = 0;
     *puMax = 1;
+    *puDataLen = 0;
     *ppData = nullptr;
 
     HRESULT hr = ReadImageHeaders(pStream, pFormatType, puWidth, puHeight, puMax);
@@ -539,6 +604,7 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
 
                 if (SUCCEEDED(hr))
                 {
+                    *puDataLen = sizeAlloc;
                     *ppData = pData;
                 }
                 else
