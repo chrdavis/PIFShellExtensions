@@ -13,12 +13,6 @@
 "SccProvider" = "8:"
     "Hierarchy"
     {
-        "Entry"
-        {
-        "MsmKey" = "8:_EC8817A3A74B43D5BAD04BB7E82B78ED"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
     }
     "Configurations"
     {
@@ -27,7 +21,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\PIFShellExtensionsSetup.msi"
+        "OutputFilename" = "8:Debug\\PIFShellExtensionsSetup64.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -59,7 +53,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\PIFShellExtensionsSetup.msi"
+        "OutputFilename" = "8:Release\\x64\\PIFShellExtensionsSetup64.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -161,9 +155,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Portable Image Format Windows Shell Extensibility"
+        "ProductName" = "8:Portable Image Format Windows Shell Extension"
         "ProductCode" = "8:{AEFF6D1E-0CFC-4BE9-B55E-625ED19EE615}"
-        "PackageCode" = "8:{4004FE85-D902-45FB-8E02-574B3FDEDC28}"
+        "PackageCode" = "8:{70F6C9DC-C1AC-4EB7-B3E6-FA7C78850183}"
         "UpgradeCode" = "8:{DAE6DEC5-EED7-4743-BA34-BEAFA8BC7CE8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -174,7 +168,7 @@
         "Manufacturer" = "8:Chris Davis"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Portable Image Format Windows Shell Extensibility"
+        "Title" = "8:Portable Image Format Windows Shell Extension"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Chris Davis"
         "Keywords" = "8:PIF ppm pgm pbm pnm"
@@ -679,7 +673,7 @@
                                             "Condition" = "8:"
                                             "Transitive" = "11:FALSE"
                                             "ValueTypes" = "3:1"
-                                            "Value" = "8:[TARGETDIR]PIFShellExtensions32.dll"
+                                            "Value" = "8:[TARGETDIR]PIFShellExtensions64.dll"
                                             }
                                             "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_87B4FA1ABCC042E388FC09145515B6F4"
                                             {
@@ -1820,7 +1814,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_62C7E43DC5C24F0AB7B178689623E7E1"
             {
-            "SourcePath" = "8:"
+            "SourcePath" = "8:..\\x64\\Release\\PIFShellExtensions64.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DEF88850782F4B4D8EB738ECB05EDB69"
@@ -1839,34 +1833,6 @@
             "IsolateTo" = "8:"
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:Release|x64"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{73E69D94-C385-4703-AD0B-BB2FE6905F46}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_EC8817A3A74B43D5BAD04BB7E82B78ED"
-            {
-            "SourcePath" = "8:..\\Win32\\Release\\PIFShellExtensions32.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DEF88850782F4B4D8EB738ECB05EDB69"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:Release|Win32"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{73E69D94-C385-4703-AD0B-BB2FE6905F46}"
             "ShowKeyOutput" = "11:TRUE"

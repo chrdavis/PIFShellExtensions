@@ -482,6 +482,7 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
     if (SUCCEEDED(hr))
     {
         size_t sizeAlloc = 0;
+        size_t sizeAllocBits = 0;
 
         if ((*pFormatType == PortableImageFormatType_PPMA) ||
             (*pFormatType == PortableImageFormatType_PPMB))
@@ -500,6 +501,34 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
             hr = E_INVALIDARG;
         }
 
+        // Do a sniff test to check if sizeAlloc is expected.  Protect against an invalid file type
+        // specifying a huge width and/or height causing us to allocate an enormous buffer.
+        ULARGE_INTEGER dataSize = {0};
+        if (SUCCEEDED(hr))
+        {
+            hr = IStream_Size(pStream, &dataSize);
+            if (SUCCEEDED(hr))
+            {
+                if (*pFormatType == PortableImageFormatType_PBMB)
+                {
+                    // We are packing bits for black/white pixels, not bytes
+                    sizeAllocBits = (((*puWidth) * (*puHeight)) / 8);
+                    if ((((*puWidth) * (*puHeight)) % 8) > 0)
+                    {
+                        // Add an extra byte per row to account for some extra bits
+                        // that didn't fit.
+                        sizeAllocBits += (*puHeight);
+                    }
+
+                    hr = (dataSize.LowPart >= static_cast<ULONGLONG>(sizeAllocBits - (*puHeight))) ? S_OK : E_FAIL;
+                }
+                else
+                {
+                    hr = (dataSize.LowPart >= static_cast<ULONGLONG>(sizeAlloc)) ? S_OK : E_FAIL;
+                }
+            }
+        }
+
         if (SUCCEEDED(hr))
         {
             BYTE* pData = new BYTE[sizeAlloc];
@@ -514,18 +543,15 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
                 {
                     // If we are reading a binary file we can read it in one go
                     hr = pStream->Read((void*)pData, sizeof(BYTE) * sizeAlloc, &cbRead);
+                    if (SUCCEEDED(hr))
+                    {
+                        // Did we read the expected ammount of data?
+                        hr = ((static_cast<size_t>(cbRead) == sizeAlloc - 1) ||
+                              (static_cast<size_t>(cbRead) == sizeAlloc)) ? S_OK : E_FAIL;
+                    }
                 }
                 else if (*pFormatType == PortableImageFormatType_PBMB)
                 {
-                    // We are packing bits for black/white pixels, not bytes
-                    size_t sizeAllocBits = (((*puWidth) * (*puHeight)) / 8);
-                    if ((((*puWidth) * (*puHeight)) % 8) > 0)
-                    {
-                        // Add an extra byte per row to account for some extra bits
-                        // that didn't fit.
-                        sizeAllocBits += (*puHeight);
-                    }
-
                     BYTE* pBitsData = new BYTE[sizeAllocBits];
                     hr = pBitsData ? S_OK : E_OUTOFMEMORY;
                     if (SUCCEEDED(hr))
@@ -560,78 +586,73 @@ HRESULT CPIFImageHelpers::ReadImageFromStream(
                 else
                 {
                     // Reading ascii format
-                    ULARGE_INTEGER dataSize;
-                    hr = IStream_Size(pStream, &dataSize);
+                    // We need to take into account spaces between pixel data.  Typically we will have
+                    // to account for > 2.5x sizeAlloc to account for the extra spaces
+                    char* pAsciiData = new char[dataSize.LowPart];
+                    hr = pAsciiData ? S_OK : E_OUTOFMEMORY;
                     if (SUCCEEDED(hr))
                     {
-                        // We need to take into account spaces between pixel data.  Typically we will have
-                        // to account for > 2.5x sizeAlloc to account for the extra spaces
-                        char* pAsciiData = new char[dataSize.LowPart];
-                        hr = pAsciiData ? S_OK : E_OUTOFMEMORY;
+                        BYTE* pDataCurr = pData;
+                        ZeroMemory(pAsciiData, sizeof(char) * dataSize.LowPart);
+                        hr = pStream->Read((void*)pAsciiData, sizeof(char) * (dataSize.LowPart - 1), &cbRead);
                         if (SUCCEEDED(hr))
                         {
-                            BYTE* pDataCurr = pData;
-                            ZeroMemory(pAsciiData, sizeof(char) * dataSize.LowPart);
-                            hr = pStream->Read((void*)pAsciiData, sizeof(char) * (dataSize.LowPart - 1), &cbRead);
-                            if (SUCCEEDED(hr))
+                            char* pCurrNumStart = pAsciiData;
+                            char* pCurrNumEnd = pAsciiData;
+
+                            while (SUCCEEDED(hr) && pCurrNumStart && *pCurrNumStart != '\0')
                             {
-                                char* pCurrNumStart = pAsciiData;
-                                char* pCurrNumEnd = pAsciiData;
-
-                                while (SUCCEEDED(hr) && pCurrNumStart && *pCurrNumStart != '\0')
+                                // First walk any leading whitespace
+                                while (IsWhitespace(*pCurrNumStart))
                                 {
-                                    // First walk any leading whitespace
-                                    while (IsWhitespace(*pCurrNumStart))
-                                    {
-                                        pCurrNumStart++;
-                                        pCurrNumEnd = pCurrNumStart;
-                                    }
+                                    pCurrNumStart++;
+                                    pCurrNumEnd = pCurrNumStart;
+                                }
 
-                                    // Walk until we hit whitespace
-                                    while (pCurrNumEnd && *pCurrNumEnd != '\0' &&
-                                        !IsWhitespace(*pCurrNumEnd))
-                                    {
-                                        pCurrNumEnd++;
-                                    }
+                                // Walk until we hit whitespace
+                                while (pCurrNumEnd && *pCurrNumEnd != '\0' &&
+                                    !IsWhitespace(*pCurrNumEnd))
+                                {
+                                    pCurrNumEnd++;
+                                }
 
-                                    // Read in the current value
-                                    if (pCurrNumStart && *pCurrNumStart != '\0' &&
-                                        pCurrNumEnd && *pCurrNumEnd != '\0')
-                                    {
-                                        *pCurrNumEnd = '\0';
+                                // Read in the current value
+                                if (pCurrNumStart && *pCurrNumStart != '\0' &&
+                                    pCurrNumEnd && *pCurrNumEnd != '\0')
+                                {
+                                    *pCurrNumEnd = '\0';
 
-                                        hr = ((pDataCurr - pData) < sizeAlloc) ? S_OK : E_FAIL;
-                                        if (SUCCEEDED(hr))
-                                        {
-                                            *pDataCurr = static_cast<BYTE>(atoi(pCurrNumStart));
-                                            // Move our insertion pointer for the data
-                                            pDataCurr++;
-                                        }
-                                    }
-
-                                    // Set our two pointers to the next value
-                                    if (pCurrNumEnd)
+                                    hr = (static_cast<size_t>(pDataCurr - pData) < sizeAlloc) ? S_OK : E_FAIL;
+                                    if (SUCCEEDED(hr))
                                     {
-                                        pCurrNumEnd++;
-                                        pCurrNumStart = pCurrNumEnd;
+                                        *pDataCurr = static_cast<BYTE>(atoi(pCurrNumStart));
+                                        // Move our insertion pointer for the data
+                                        pDataCurr++;
                                     }
                                 }
 
-                                if (SUCCEEDED(hr))
+                                // Set our two pointers to the next value
+                                if (pCurrNumEnd)
                                 {
-                                    // Did we read the expected ammount of data?
-                                    hr = (((pDataCurr - pData) == sizeAlloc - 1) ||
-                                          ((pDataCurr - pData) == sizeAlloc)) ? S_OK : E_FAIL;
+                                    pCurrNumEnd++;
+                                    pCurrNumStart = pCurrNumEnd;
                                 }
                             }
-                            delete[] pAsciiData;
+
+                            if (SUCCEEDED(hr))
+                            {
+                                // Did we read the expected ammount of data?
+                                hr = ((static_cast<size_t>(pDataCurr - pData) == sizeAlloc - 1) ||
+                                      (static_cast<size_t>(pDataCurr - pData) == sizeAlloc)) ? S_OK : E_FAIL;
+                            }
                         }
+                        delete[] pAsciiData;
                     }
                 }
 
                 if (SUCCEEDED(hr))
                 {
-                    *puDataLen = sizeAlloc;
+                    *puDataLen = static_cast<UINT>(sizeAlloc);
                     *ppData = pData;
                 }
                 else

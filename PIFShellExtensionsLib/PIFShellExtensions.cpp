@@ -120,6 +120,7 @@ IFACEMETHODIMP CPIFShellExt::GetCurFile(_Outptr_ LPOLESTR* ppszFileName)
 // IDataObject
 IFACEMETHODIMP CPIFShellExt::EnumFormatEtc(_In_ DWORD, _COM_Outptr_ IEnumFORMATETC** ppiefe)
 {
+    *ppiefe = nullptr;
     FORMATETC rgfmtetc[] =
     {
         { CF_BITMAP, nullptr, DVASPECT_CONTENT, -1, TYMED_GDI },
@@ -233,6 +234,7 @@ IFACEMETHODIMP CPIFShellExt::GetPropertyStore(
     _In_ REFIID riid,
     _COM_Outptr_ void **ppv)
 {
+    *ppv = nullptr;
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
     {
@@ -253,6 +255,7 @@ IFACEMETHODIMP CPIFShellExt::GetPropertyStoreForKeys(
     _In_ REFIID riid,
     _COM_Outptr_ void** ppv)
 {
+    *ppv = nullptr;
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
     {

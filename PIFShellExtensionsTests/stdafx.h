@@ -17,3 +17,14 @@
 #include <strsafe.h>
 #include <olectl.h>
 #include <atlbase.h>
+
+//
+// READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS//
+//
+// Be sure to move the Test Data folder in this project to a known location like below
+// or change the below path.
+//
+// READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS//
+//
+
+#define SZ_ROOT_TEST_FOLDER L"c:\\Test Data\\"

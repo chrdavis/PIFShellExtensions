@@ -6,15 +6,6 @@
 using namespace Gdiplus;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-//
-// READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS//
-// Be sure to move the Test Data folder in this project to a known location like below
-// or change the below path.
-// READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS READ THIS//
-//
-
-#define SZ_ROOT_TEST_FOLDER L"c:\\Test Data\\"
-
 namespace PIFShellExtensionsTests
 {
     TEST_CLASS(PropertyStoreTests)
@@ -31,7 +22,7 @@ namespace PIFShellExtensionsTests
         TEST_METHOD(VerifyGetPropertyStore)
         {
             CComPtr<IStream> spStream;
-            Assert::IsTrue(SHCreateStreamOnFileEx(SZ_ROOT_TEST_FOLDER L"PBMA\\fool.ascii.pbm", STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &spStream) == S_OK);
+            Assert::IsTrue(SHCreateStreamOnFileEx(SZ_ROOT_TEST_FOLDER L"Valid\\PBMA\\fool.ascii.pbm", STGM_READ, FILE_ATTRIBUTE_NORMAL, FALSE, NULL, &spStream) == S_OK);
 
             CPIFShellExt* pPIFShellExt = new CPIFShellExt();
             Assert::IsNotNull(pPIFShellExt);
