@@ -3,6 +3,7 @@
 #include <Thumbcache.h>
 #include <propsys.h>
 #include <atlbase.h>
+#include "PIFParser.h"
 #include "ImageHelpers.h"
 
 void DllAddRef();
@@ -115,7 +116,6 @@ private:
     bool  _fPropertiesInitialized;
     CComPtr<IStream> _spStream;
     CComPtr<IPropertyStore> _spPropertyStore;
-    CPIFImageHelpers _pifImageHelpers;
 };
 
 class CPIFFactory : public IClassFactory

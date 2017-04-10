@@ -17,27 +17,6 @@ CPIFImageHelpers::~CPIFImageHelpers()
     GdiplusShutdown(_gdiPlusToken);
 }
 
-UINT CPIFImageHelpers::BitDepthFromPIFType(_In_ PortableImageFormatType formatType)
-{
-    UINT uBitDepth = 0;
-    switch (formatType)
-    {
-    case PortableImageFormatType_PBMA:
-    case PortableImageFormatType_PBMB:
-        uBitDepth = 1;
-        break;
-    case PortableImageFormatType_PGMA:
-    case PortableImageFormatType_PGMB:
-        uBitDepth = 8;
-        break;
-    case PortableImageFormatType_PPMA:
-    case PortableImageFormatType_PPMB:
-        uBitDepth = 24;
-        break;
-    }
-    return uBitDepth;
-}
-
 HRESULT CPIFImageHelpers::GetBitmapFromStream(
     _In_ IStream* pStream,
     _Out_ UINT* puWidth,

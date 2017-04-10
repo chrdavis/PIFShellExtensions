@@ -27,7 +27,7 @@
     <ClInclude Include="PIFShellExtensions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImageHelpers.h">
+    <ClInclude Include="PIFParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="PIFShellExtensions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImageHelpers.cpp">
+    <ClCompile Include="PIFParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

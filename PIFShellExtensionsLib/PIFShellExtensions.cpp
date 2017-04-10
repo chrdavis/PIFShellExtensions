@@ -158,17 +158,22 @@ IFACEMETHODIMP CPIFShellExt::GetData(_In_ FORMATETC* pformatetcIn, _Out_ STGMEDI
         hr = _spStream ? S_OK : E_FAIL;
         if (SUCCEEDED(hr))
         {
-            HBITMAP hbmp;
-            UINT uWidth;
-            UINT uHeight;
-            hr = _pifImageHelpers.GetBitmapFromStream(_spStream, &uWidth, &uHeight, &hbmp);
+            CBaseImageParser* pImageParser = nullptr;
+            hr = CBaseImageParser::CreateParserFromStream(_spStream, &pImageParser);
             if (SUCCEEDED(hr))
             {
-                pmedium->tymed = TYMED_GDI;
-                pmedium->hBitmap = (HBITMAP)OleDuplicateData(hbmp, CF_BITMAP, 0);
-                pmedium->pUnkForRelease = nullptr;
-                hr = pmedium->hBitmap != nullptr ? S_OK : STG_E_MEDIUMFULL;
-                DeleteObject(hbmp);
+                HBITMAP hbmp;
+                hr = pImageParser->GetBitmap(&hbmp);
+                if (SUCCEEDED(hr))
+                {
+                    pmedium->tymed = TYMED_GDI;
+                    pmedium->hBitmap = (HBITMAP)OleDuplicateData(hbmp, CF_BITMAP, 0);
+                    pmedium->pUnkForRelease = nullptr;
+                    hr = pmedium->hBitmap != nullptr ? S_OK : STG_E_MEDIUMFULL;
+                    DeleteObject(hbmp);
+                }
+
+                delete pImageParser;
             }
         }
     }
@@ -357,14 +362,20 @@ IFACEMETHODIMP CPIFShellExt::Extract(_Out_ HBITMAP* phBmpImage)
                 }
 
                 // Get the bitmap and resize it appropriately
-                HBITMAP hbmpOriginal;
-                UINT uWidth;
-                UINT uHeight;
-                hr = _pifImageHelpers.GetBitmapFromStream(_spStream, &uWidth, &uHeight, &hbmpOriginal);
+                CBaseImageParser* pImageParser = nullptr;
+                hr = CBaseImageParser::CreateParserFromStream(_spStream, &pImageParser);
                 if (SUCCEEDED(hr))
                 {
-                    hr = _pifImageHelpers.ResizeBitmap(hbmpOriginal, fMaintainAspectRatio, &_sizeDesired, phBmpImage);
-                    DeleteObject(hbmpOriginal);
+                    HBITMAP hbmpOriginal;
+                    hr = pImageParser->GetBitmap(&hbmpOriginal);
+                    if (SUCCEEDED(hr))
+                    {
+                        hr = pImageParser->ResizeBitmap(hbmpOriginal, fMaintainAspectRatio, &_sizeDesired, phBmpImage);
+                        DeleteObject(hbmpOriginal);
+                    }
+
+                    delete pImageParser;
+                    pImageParser = nullptr;
                 }
             }
         }
@@ -396,16 +407,22 @@ IFACEMETHODIMP CPIFShellExt::GetThumbnail(
     if (SUCCEEDED(hr))
     {
         // Get the bitmap and resize it appropriately
-        HBITMAP hbmpOriginalSize;
-        UINT uWidth;
-        UINT uHeight;
-        hr = _pifImageHelpers.GetBitmapFromStream(_spStream, &uWidth, &uHeight, &hbmpOriginalSize);
+        CBaseImageParser* pImageParser = nullptr;
+        hr = CBaseImageParser::CreateParserFromStream(_spStream, &pImageParser);
         if (SUCCEEDED(hr))
         {
-            _sizeDesired.cx = cx;
-            _sizeDesired.cy = cx;
-            hr = _pifImageHelpers.ResizeBitmap(hbmpOriginalSize, true, &_sizeDesired, phbmp);
-            DeleteObject(hbmpOriginalSize);
+            HBITMAP hbmpOriginalSize;
+            hr = pImageParser->GetBitmap(&hbmpOriginalSize);
+            if (SUCCEEDED(hr))
+            {
+                _sizeDesired.cx = cx;
+                _sizeDesired.cy = cx;
+                hr = pImageParser->ResizeBitmap(hbmpOriginalSize, true, &_sizeDesired, phbmp);
+                DeleteObject(hbmpOriginalSize);
+            }
+
+            delete pImageParser;
+            pImageParser = nullptr;
         }
     }
     return hr;
@@ -436,13 +453,9 @@ HRESULT CPIFShellExt::_InitializeProperties()
     HRESULT hr = _spPropertyStore ? S_OK : E_FAIL;
     if (SUCCEEDED(hr) && !_fPropertiesInitialized)
     {
-        CPIFImageHelpers::PortableImageFormatType formatType = CPIFImageHelpers::PortableImageFormatType::PortableImageFormatType_Invalid;
-        UINT uWidth = 0;
-        UINT uHeight = 0;
-        UINT uMax = 0;
         PROPVARIANT pv = {};
-
-        hr = _pifImageHelpers.ReadImageHeaders(_spStream, &formatType, &uWidth, &uHeight, &uMax);
+        CBaseImageParser* pImageParser = nullptr;
+        hr = CBaseImageParser::CreateParserFromStream(_spStream, &pImageParser);
 
         if (SUCCEEDED(hr))
         {
@@ -454,28 +467,28 @@ HRESULT CPIFShellExt::_InitializeProperties()
         if (SUCCEEDED(hr))
         {
             pv.vt = VT_UI4;
-            pv.ulVal = uWidth;
+            pv.ulVal = pImageParser->GetWidth();
             hr = _spPropertyStore->SetValue(PKEY_Image_HorizontalSize, pv);
         }
 
         if (SUCCEEDED(hr))
         {
             pv.vt = VT_UI4;
-            pv.ulVal = uHeight;
+            pv.ulVal = pImageParser->GetHeight();
             hr = _spPropertyStore->SetValue(PKEY_Image_VerticalSize, pv);
         }
 
         if (SUCCEEDED(hr))
         {
             pv.vt = VT_UI4;
-            pv.ulVal = CPIFImageHelpers::BitDepthFromPIFType(formatType);
+            pv.ulVal = pImageParser->GetBitDepth();
             hr = _spPropertyStore->SetValue(PKEY_Image_BitDepth, pv);
         }
 
         if (SUCCEEDED(hr))
         {
             wchar_t szResolution[30];
-            hr = StringCchPrintf(szResolution, ARRAYSIZE(szResolution), L"%i x %i", uWidth, uHeight);
+            hr = StringCchPrintf(szResolution, ARRAYSIZE(szResolution), L"%i x %i", pImageParser->GetWidth(), pImageParser->GetHeight());
             pv.vt = VT_LPWSTR;
             pv.pwszVal = szResolution;
             hr = _spPropertyStore->SetValue(PKEY_Image_Dimensions, pv);
@@ -485,6 +498,9 @@ HRESULT CPIFShellExt::_InitializeProperties()
         {
             _fPropertiesInitialized = true;
         }
+
+        delete pImageParser;
+        pImageParser = nullptr;
 
         IStream_Reset(_spStream);
     }
