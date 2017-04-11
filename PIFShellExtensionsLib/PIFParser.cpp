@@ -6,6 +6,28 @@ using namespace Gdiplus;
 
 const LARGE_INTEGER c_liZero = { 0, 0 };
 
+//
+// CBaseImageParser
+//
+CBaseImageParser::CBaseImageParser() :
+    m_uWidth(0),
+    m_uHeight(0),
+    m_uMaxValue(0),
+    m_uDataLen(0),
+    m_spStream(nullptr),
+    m_rgData(nullptr),
+    m_imageType(PortableImageFormatType_Invalid)
+{
+    GdiplusStartupInput gdiPlusStatupInput;
+    GdiplusStartup(&_gdiPlusToken, &gdiPlusStatupInput, nullptr);
+}
+
+CBaseImageParser::~CBaseImageParser()
+{
+    delete [] m_rgData;
+    GdiplusShutdown(_gdiPlusToken);
+}
+
 HRESULT CBaseImageParser::CreateParserFromStream(_In_ IStream* pStream, _Outptr_ CBaseImageParser** ppImageParser)
 {
     *ppImageParser = nullptr;
@@ -43,25 +65,6 @@ HRESULT CBaseImageParser::CreateParserFromStream(_In_ IStream* pStream, _Outptr_
     return hr;
 }
 
-CBaseImageParser::CBaseImageParser() :
-    m_uWidth(0),
-    m_uHeight(0),
-    m_uMaxValue(0),
-    m_uDataLen(0),
-    m_spStream(nullptr),
-    m_rgData(nullptr),
-    m_imageType(PortableImageFormatType_Invalid)
-{
-    GdiplusStartupInput gdiPlusStatupInput;
-    GdiplusStartup(&_gdiPlusToken, &gdiPlusStatupInput, nullptr);
-}
-
-CBaseImageParser::~CBaseImageParser()
-{
-    delete [] m_rgData;
-    GdiplusShutdown(_gdiPlusToken);
-}
-
 HRESULT CBaseImageParser::GetBitmap(
     _Out_ HBITMAP* phBitmap)
 {
@@ -91,7 +94,7 @@ HRESULT CBaseImageParser::GetBitmap(
     return hr;
 }
 
-HRESULT CBaseImageParser::ReadImageType(_In_ IStream *pStream, _Out_ PortableImageFormatType* pImageType)
+HRESULT CBaseImageParser::ReadImageType(_In_ IStream* pStream, _Out_ PortableImageFormatType* pImageType)
 {
     *pImageType = PortableImageFormatType_Invalid;
     HRESULT hr = pStream ? S_OK : E_INVALIDARG;
@@ -122,21 +125,7 @@ HRESULT CBaseImageParser::ReadImageHeaders()
     if (SUCCEEDED(hr))
     {
         // First get the portable image type
-        while (SUCCEEDED(hr) && m_imageType == PortableImageFormatType_Invalid)
-        {
-            // Verify type
-            UINT type = 0;
-            hr = ParseImageLineForNum(m_spStream, "P%u", &type);
-            if (SUCCEEDED(hr))
-            {
-                hr = (type > PortableImageFormatType_Invalid && type < PortableImageFormatType_Count) ? S_OK : E_FAIL;
-                if (SUCCEEDED(hr))
-                {
-                    m_imageType = static_cast<PortableImageFormatType>(type);
-                }
-            }
-        }
-
+        hr = ReadImageType(m_spStream, &m_imageType);
         if (SUCCEEDED(hr))
         {
             // Parse width, height and max.  PBMA and PBMB don't have max values.
@@ -472,7 +461,7 @@ HRESULT CBaseImageParser::ResizeBitmap(
 {
     *phbmpResized = nullptr;
 
-    Bitmap *pBitmap = new Bitmap(hbmpOriginal, nullptr);
+    Bitmap* pBitmap = new Bitmap(hbmpOriginal, nullptr);
     HRESULT hr = pBitmap ? S_OK : E_OUTOFMEMORY;
     if (SUCCEEDED(hr))
     {
@@ -503,13 +492,13 @@ HRESULT CBaseImageParser::ResizeBitmap(
                 }
             }
 
-            Bitmap *pResizeBitmap = new Bitmap(desiredWidth, desiredHeight, PixelFormat24bppRGB);
+            Bitmap* pResizeBitmap = new Bitmap(desiredWidth, desiredHeight, PixelFormat24bppRGB);
             hr = pResizeBitmap ? S_OK : E_OUTOFMEMORY;
             if (SUCCEEDED(hr))
             {
                 pResizeBitmap->SetResolution(pBitmap->GetHorizontalResolution(), pBitmap->GetVerticalResolution());
 
-                Graphics *pgrResize = new Graphics(pResizeBitmap);
+                Graphics* pgrResize = new Graphics(pResizeBitmap);
                 hr = pgrResize ? S_OK : E_OUTOFMEMORY;
                 if (SUCCEEDED(hr))
                 {
@@ -539,8 +528,9 @@ HRESULT CBaseImageParser::ResizeBitmap(
     return hr;
 }
 
+//
 // CPPMImageParser
-
+//
 size_t CPPMImageParser::GetAllocationSize()
 {
     return m_uWidth * m_uHeight * 3;
@@ -579,7 +569,7 @@ HRESULT CPPMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
     HRESULT hr = (m_uWidth * m_uHeight * 3 == m_uDataLen) ? S_OK : E_INVALIDARG;
     if (SUCCEEDED(hr))
     {
-        BYTE *pCurr = m_rgData;
+        BYTE* pCurr = m_rgData;
         for (UINT row = 0; row < m_uHeight; row++)
         {
             for (UINT col = 0; col < m_uWidth; col++)
@@ -594,8 +584,9 @@ HRESULT CPPMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
     return hr;
 }
 
+//
 // CPGMImageParser
-
+//
 size_t CPGMImageParser::GetAllocationSize()
 {
     return m_uWidth * m_uHeight;
@@ -633,7 +624,7 @@ HRESULT CPGMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
     HRESULT hr = (m_uWidth * m_uHeight == m_uDataLen) ? S_OK : E_INVALIDARG;
     if (SUCCEEDED(hr))
     {
-        BYTE *pCurr = m_rgData;
+        BYTE* pCurr = m_rgData;
         for (UINT row = 0; row < m_uHeight; row++)
         {
             for (UINT col = 0; col < m_uWidth; col++)
@@ -648,9 +639,9 @@ HRESULT CPGMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
     return hr;
 }
 
-
+//
 // CPBMImageParser
-
+//
 size_t CPBMImageParser::GetAllocationSize()
 {
     return m_uWidth * m_uHeight;
@@ -663,21 +654,7 @@ HRESULT CPBMImageParser::ReadImageHeaders()
     if (SUCCEEDED(hr))
     {
         // First get the portable image type
-        while (SUCCEEDED(hr) && m_imageType == PortableImageFormatType_Invalid)
-        {
-            // Verify type
-            UINT type = 0;
-            hr = ParseImageLineForNum(m_spStream, "P%u", &type);
-            if (SUCCEEDED(hr))
-            {
-                hr = (type > PortableImageFormatType_Invalid && type < PortableImageFormatType_Count) ? S_OK : E_FAIL;
-                if (SUCCEEDED(hr))
-                {
-                    m_imageType = static_cast<PortableImageFormatType>(type);
-                }
-            }
-        }
-
+        hr = ReadImageType(m_spStream, &m_imageType);
         if (SUCCEEDED(hr))
         {
             // Parse width and height.  PBM images don't have a max value field
@@ -810,7 +787,7 @@ HRESULT CPBMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
     HRESULT hr = (m_uWidth * m_uHeight == m_uDataLen) ? S_OK : E_INVALIDARG;
     if (SUCCEEDED(hr))
     {
-        BYTE *pCurr = m_rgData;
+        BYTE* pCurr = m_rgData;
         for (UINT row = 0; row < m_uHeight; row++)
         {
             for (UINT col = 0; col < m_uWidth; col++)

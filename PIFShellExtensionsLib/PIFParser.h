@@ -20,7 +20,7 @@ public:
     virtual ~CBaseImageParser();
 
     HRESULT InitializeFromStream(_In_ IStream* pStream);
-    HRESULT GetBitmap(_Out_ HBITMAP *phBitmap);
+    HRESULT GetBitmap(_Out_ HBITMAP* phBitmap);
     PortableImageFormatType GetImageType() { return m_imageType; }
     UINT GetWidth() { return m_uWidth; }
     UINT GetHeight() { return m_uHeight; }
@@ -37,12 +37,12 @@ protected:
     virtual size_t GetAllocationSize() = 0;
     virtual HRESULT ReadImageHeaders();
     virtual HRESULT ReadImageData() = 0;
-    static HRESULT ReadImageType(_In_ IStream *pStream, _Out_ PortableImageFormatType* pImageType);
+    static HRESULT ReadImageType(_In_ IStream* pStream, _Out_ PortableImageFormatType* pImageType);
     virtual HRESULT ReadBinaryImageData();
     virtual HRESULT ReadAsciiImageData();
     virtual bool IsDataSizeValid() = 0;
-    static HRESULT ReadLineFromStream(_In_ IStream *pStream, _Outptr_ char** ppBuffer);
-    static HRESULT ParseImageLineForNum(_In_ IStream *pStream, _In_ PCSTR pszFormat, _Out_ UINT* value);
+    static HRESULT ReadLineFromStream(_In_ IStream* pStream, _Outptr_ char** ppBuffer);
+    static HRESULT ParseImageLineForNum(_In_ IStream* pStream, _In_ PCSTR pszFormat, _Out_ UINT* value);
     virtual HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap) = 0;
     static bool IsWhitespace(_In_ char ch);
 
