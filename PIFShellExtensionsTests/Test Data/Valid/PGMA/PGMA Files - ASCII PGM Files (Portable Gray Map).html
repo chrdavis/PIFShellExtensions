@@ -1,0 +1,481 @@
+
+<!-- saved from url=(0055)http://people.sc.fsu.edu/~jburkardt/data/pgma/pgma.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+      PGMA Files - ASCII PGM Files (Portable Gray Map)
+    </title>
+  </head>
+
+  <body bgcolor="#EEEEEE" link="#CC0000" alink="#FF3300" vlink="#000055">
+
+    <h1 align="center">
+      PGMA Files <br> ASCII PGM Files (Portable Gray Map)
+    </h1>
+
+    <hr>
+
+    <p>
+      <b>PGMA</b> is a data directory which
+      contains examples of the ASCII PGM (Portable Gray Map) file format.  It is a simple
+      grayscale image description.  The definition is as follows:
+      </p><ul>
+        <li>
+          the typical file extension is ".pgm", but an extension of
+          ".pnm" is also occasionally used.
+        </li>
+        <li>
+          A "magic number" for identifying the file type.  An
+          ASCII PGM file's magic
+          number is the two characters "P2".
+        </li>
+        <li>
+          Whitespace (blanks, TABs, CRs, LFs).
+        </li>
+        <li>
+          A width, formatted as ASCII characters in decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          A height, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          The maximum gray value, again in ASCII decimal.
+        </li>
+        <li>
+          Whitespace.
+        </li>
+        <li>
+          Width * height gray values, each in ASCII decimal, between 0 and the
+          specified maximum value, separated by whitespace, starting at the
+          top-left corner of the graymap, proceeding in normal English
+          reading order.
+          A value of 0 means black, and the maximum value means white.
+        </li>
+      </ul>
+      Characters from a "#" to the next end-of-line are ignored (comments).
+      No line should be longer than 70 characters.
+    <p></p>
+
+    <h3 align="center">
+      Example ASCII PGM file:
+    </h3>
+
+    <p>
+      </p><pre>        P2
+        # feep.ascii.pgm
+        24 7
+        15
+        0 0  0  0  0  0  0  0  0 0  0  0  0  0  0  0  0 0  0  0  0  0  0  0
+        0 3  3  3  3  0  0  7  7 7  7  0  0 11 11 11 11 0  0 15 15 15 15  0
+        0 3  0  0  0  0  0  7  0 0  0  0  0 11  0  0  0 0  0 15  0  0 15  0
+        0 3  3  3  0  0  0  7  7 7  0  0  0 11 11 11  0 0  0 15 15 15 15  0
+        0 3  0  0  0  0  0  7  0 0  0  0  0 11  0  0  0 0  0 15  0  0  0  0
+        0 3  0  0  0  0  0  7  7 7  7  0  0 11 11 11 11 0  0 15  0  0  0  0
+        0 0  0  0  0  0  0  0  0 0  0  0  0  0  0  0  0 0  0  0  0  0  0  0
+      </pre>
+    <p></p>
+
+    <h3 align="center">
+      ASCII PGM File Characteristics:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          ASCII
+        </li>
+        <li>
+          Gray
+        </li>
+        <li>
+          2D
+        </li>
+        <li>
+          No compression
+        </li>
+        <li>
+          1 image
+        </li>
+      </ul>
+    <p></p>
+
+    <h3 align="center">
+      Licensing:
+    </h3>
+
+    <p>
+      The computer code and data files described and made available on this web page
+      are distributed under
+      <a href="http://people.sc.fsu.edu/~jburkardt/txt/gnu_lgpl.txt">the GNU LGPL license.</a>
+    </p>
+
+    <h3 align="center">
+      Related Data and Programs:
+    </h3>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pbma/pbma.html">
+      PBMA</a>,
+      a data directory which
+      describes ASCII PBM (Portable Bit Map) files.
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/pgmb/pgmb.html">
+      PGMB</a>,
+      a data directory which
+      describes binary PGM (Portable Gray Map) files.
+    </p>
+
+    <p>
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/ppma/ppma.html">
+      PPMA</a>,
+      a data directory which
+      describes ASCII PPM (Portable Pixel Map) files.
+    </p>
+
+    <h3 align="center">
+      Reference:
+    </h3>
+
+    <p>
+      </p><ol>
+        <li>
+          <a href="http://netpbm.sourceforge.net/">the NETPBM homepage</a>.
+        </li>
+      </ol>
+    <p></p>
+
+    <h3 align="center">
+      Sample Files:
+    </h3>
+
+    <p>
+      </p><ul>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/apollonian_gasket.ascii.pgm">apollonian_gasket.ascii.pgm</a>, 
+          a 600 wide by 600 high image of an Apollonian gasket.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/apollonian_gasket.png">apollonian_gasket.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/baboon.ascii.pgm">baboon.ascii.pgm</a>, 
+          a 512 wide by 512 high image of a baboon.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/baboon.png">baboon.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/balloons.ascii.pgm">balloons.ascii.pgm</a>, 
+          a 640 wide by 480 high image of a couple, with balloons.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/balloons.png">balloons.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/balloons_noisy.ascii.pgm">balloons_noisy.ascii.pgm</a>, 
+          a 640 wide by 480 high image of a couple, with balloons,
+          after "salt and pepper" noise has been added.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/balloons_noisy.png">balloons_noisy.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/barbara.ascii.pgm">barbara.ascii.pgm</a>, 
+          a 512 wide by 512 high image of a woman.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/barbara.png">barbara.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/body1.ascii.pgm">body1.ascii.pgm</a>,
+          a 640 wide by 480 high image of a body scan.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/body1.png">body1.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/body2.ascii.pgm">body2.ascii.pgm</a>,
+          a 640 wide by 480 high image of a body scan.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/body2.png">body2.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/body3.ascii.pgm">body3.ascii.pgm</a>,
+          a 640 wide by 480 high image of a body scan.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/body3.png">body3.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_398.ascii.pgm">brain_398.ascii.pgm</a>,
+          a 720 wide by 486 high image of a visualization of the optical system.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_398.png">brain_398.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_492.ascii.pgm">brain_492.ascii.pgm</a>
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_492.png">brain_492.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_508.ascii.pgm">brain_508.ascii.pgm</a>
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_508.png">brain_508.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_604.ascii.pgm">brain_604.ascii.pgm</a>,
+          a 720 wide by 486 high image of a visualization of the optical system.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/brain_604.png">brain_604.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/casablanca.ascii.pgm">casablanca.ascii.pgm</a>,
+          a still from the movie "Casablanca";
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/casablanca.png">casablanca.png</a>,
+          a PNG version;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/coins.ascii.pgm">coins.ascii.pgm</a>,
+          a 300 wide by 246 high image of 6 nickels and 4 dimes.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/coins.png">coins.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/columns.ascii.pgm">columns.ascii.pgm</a>,
+          a 640 wide by 480 high image of a person standing by some columns;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/columns.png">columns.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/dla.ascii.pgm">dla.ascii.pgm</a>, 
+          an 800 by 800 image of a structure created by diffusion-limited aggregation.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/dla.png">dla.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/dragon.ascii.pgm">dragon.ascii.pgm</a>,
+          a 475 wide by 460 high image of a cartoon dragon.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/dragon.png">dragon.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/f14.ascii.pgm">f14.ascii.pgm</a>,
+          a 640 wide by 480 high image of an F14 fighter jet.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/f14.png">f14.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/feep.ascii.pgm">feep.ascii.pgm</a>, 
+          a 24 wide by 7 high image that
+          displays "FEEP" in block letters.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/feep.png">feep.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/foliage.ascii.pgm">foliage.ascii.pgm</a>,
+          a 480 wide by 640 high image of foliage.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/foliage.png">foliage.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/fractal_tree.ascii.pgm">fractal_tree.ascii.pgm</a>, 
+          a photograph of a tree suggesting a fractal structure.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/fractal_tree.png">fractal_tree.png</a>, 
+          a PNG version.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/galaxy.ascii.pgm">galaxy.ascii.pgm</a>,
+          a 965 wide by 965 high image containing four pictures of
+          the same galaxy at different wavelengths.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/galaxy.png">galaxy.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/gator.ascii.pgm">gator.ascii.pgm</a>,
+          a 633 wide by 621 high image of Junior the Alligator.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/gator.png">gator.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/glassware_noisy.ascii.pgm">glassware_noisy.ascii.pgm</a>,
+          a 320 wide by 428 high image of glassware, spotted with "salt and pepper" noise.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/glassware_noisy.png">glassware_noisy.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/hands.ascii.pgm">hands.ascii.pgm</a>,
+          a 640 wide by 480 high image of hands.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/hands.png">hands.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/handsmat.ascii.pgm">handsmat.ascii.pgm</a>
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/handsmat.png">handsmat.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/lena.ascii.pgm">lena.ascii.pgm</a> 
+          a 512 wide by 512 high image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/lena.png">lena.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/marcie.ascii.pgm">marcie.ascii.pgm</a>
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/marcie.png">marcie.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/mona_lisa.ascii.pgm">mona_lisa.ascii.pgm</a>,
+          a 250 wide by 360 high image of the Mona Lisa.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/mona_lisa.png">mona_lisa.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/mother_daughter.ascii.pgm">mother_daughter.ascii.pgm</a>,
+          a snapshot of a mother and daughter;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/mother_daughter.png">mother_daughter.png</a>,
+          a PNG version;
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/mountain.ascii.pgm">mountain.ascii.pgm</a>,
+          a 640 wide by 480 high image of a mountain.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/mountain.png">mountain.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pbmlib.ascii.pgm">pbmlib.ascii.pgm</a>, 
+          a 600x200 image created by PBMLIB.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pbmlib.png">pbmlib.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pepper.ascii.pgm">pepper.ascii.pgm</a>,
+          a 256 wide by 256 high image of some peppers.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/pepper.png">pepper.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/roi_14.ascii.pgm">roi_14.ascii.pgm</a>,
+          a 507 wide by 505 high image an MRI, the 14th in a sequence.11
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/roi_14.png">roi_14.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/saturn.ascii.pgm">saturn.ascii.pgm</a>
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/saturn.png">saturn.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/screws.ascii.pgm">screws.ascii.pgm</a>
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/screws.png">screws.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/snap.ascii.pgm">snap.ascii.pgm</a>,
+          a 295 wide by 400 high snapshot of a mother and child.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/snap.png">snap.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/surf.ascii.pgm">surf.ascii.pgm</a>, 
+          a 640 wide by 480 high beach picture.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/surf.png">surf.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/totem.ascii.pgm">totem.ascii.pgm</a>
+          a 640 wide by 480 high image of a totem pole.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/totem.png">totem.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/tracks.ascii.pgm">tracks.ascii.pgm</a>, 
+          a 300 wide by 200 high image that looks like tracks.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/tracks.png">tracks.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/venus1.ascii.pgm">venus1.ascii.pgm</a>,
+          a 640 wide by 480 high photo image from the surface of Venus.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/venus1.png">venus1.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/venus2.ascii.pgm">venus2.ascii.pgm</a>
+          a 640 wide by 480 high photo image from the surface of Venus.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/venus2.png">venus2.png</a>, a PNG image.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/x31_f18.ascii.pgm">x31_f18.ascii.pgm</a>,
+          a 640 wide by 480 high image of X31 and F18 aircraft.
+        </li>
+        <li>
+          <a href="http://people.sc.fsu.edu/~jburkardt/data/pgma/x31_f18.png">x31_f18.png</a>, a PNG image.
+        </li>
+      </ul>
+    <p></p>
+
+    <p>
+      You can go up one level to
+      <a href="http://people.sc.fsu.edu/~jburkardt/data/data.html">the DATA page.</a>
+    </p>
+
+    <hr>
+
+    <i>
+      Last revised on 10 June 2011.
+    </i>
+
+    <!-- John Burkardt -->
+
+  
+
+
+</body></html>
