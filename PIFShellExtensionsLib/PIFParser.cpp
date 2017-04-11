@@ -165,7 +165,7 @@ HRESULT CBaseImageParser::ReadBinaryImageData()
             {
                 m_uDataLen = static_cast<UINT>(sizeAlloc);
                 ULONG cbRead = 0;
-                hr = m_spStream->Read((void*)m_rgData, sizeof(BYTE) * sizeAlloc, &cbRead);
+                hr = m_spStream->Read((void*)m_rgData, sizeof(BYTE) * m_uDataLen, &cbRead);
                 if (SUCCEEDED(hr))
                 {
                     // Did we read the expected ammount of data?
@@ -531,11 +531,13 @@ HRESULT CBaseImageParser::ResizeBitmap(
 //
 // CPPMImageParser
 //
+__override
 size_t CPPMImageParser::GetAllocationSize()
 {
     return m_uWidth * m_uHeight * 3;
 }
 
+__override
 HRESULT CPPMImageParser::ReadImageData()
 {
     HRESULT hr = E_FAIL;
@@ -551,6 +553,7 @@ HRESULT CPPMImageParser::ReadImageData()
     return hr;
 }
 
+__override
 bool CPPMImageParser::IsDataSizeValid()
 {
     bool isValid = false;
@@ -564,6 +567,7 @@ bool CPPMImageParser::IsDataSizeValid()
     return isValid;
 }
 
+__override
 HRESULT CPPMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
 {
     HRESULT hr = (m_uWidth * m_uHeight * 3 == m_uDataLen) ? S_OK : E_INVALIDARG;
@@ -587,11 +591,13 @@ HRESULT CPPMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
 //
 // CPGMImageParser
 //
+__override
 size_t CPGMImageParser::GetAllocationSize()
 {
     return m_uWidth * m_uHeight;
 }
 
+__override
 HRESULT CPGMImageParser::ReadImageData()
 {
     HRESULT hr = E_FAIL;
@@ -606,6 +612,7 @@ HRESULT CPGMImageParser::ReadImageData()
     return hr;
 }
 
+__override
 bool CPGMImageParser::IsDataSizeValid()
 {
     bool isValid = false;
@@ -619,6 +626,7 @@ bool CPGMImageParser::IsDataSizeValid()
     return isValid;
 }
 
+__override
 HRESULT CPGMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
 {
     HRESULT hr = (m_uWidth * m_uHeight == m_uDataLen) ? S_OK : E_INVALIDARG;
@@ -642,12 +650,14 @@ HRESULT CPGMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
 //
 // CPBMImageParser
 //
+__override
 size_t CPBMImageParser::GetAllocationSize()
 {
     return m_uWidth * m_uHeight;
 }
 
 // Provider our own version of this from the base since we don't have a max value field
+__override
 HRESULT CPBMImageParser::ReadImageHeaders()
 {
     HRESULT hr = m_spStream ? S_OK : E_INVALIDARG;
@@ -674,6 +684,7 @@ HRESULT CPBMImageParser::ReadImageHeaders()
     return hr;
 }
 
+__override
 HRESULT CPBMImageParser::ReadImageData()
 {
     HRESULT hr = E_FAIL;
@@ -689,6 +700,7 @@ HRESULT CPBMImageParser::ReadImageData()
     return hr;
 }
 
+__override
 HRESULT CPBMImageParser::ReadBinaryImageData()
 {
     HRESULT hr = IsDataSizeValid() ? S_OK : E_FAIL;
@@ -720,7 +732,7 @@ HRESULT CPBMImageParser::ReadBinaryImageData()
                 {
                     ZeroMemory(pBitsData, sizeof(BYTE) * sizeAllocBits);
                     ULONG cbRead = 0;
-                    hr = m_spStream->Read((void*)pBitsData, sizeof(BYTE) * sizeAllocBits, &cbRead);
+                    hr = m_spStream->Read((void*)pBitsData, static_cast<ULONG>(sizeof(BYTE) * sizeAllocBits), &cbRead);
                     if (SUCCEEDED(hr))
                     {
                         UINT shift;
@@ -759,7 +771,7 @@ HRESULT CPBMImageParser::ReadBinaryImageData()
     return hr;
 }
 
-
+__override
 bool CPBMImageParser::IsDataSizeValid()
 {
     bool isValid = false;
@@ -782,6 +794,7 @@ bool CPBMImageParser::IsDataSizeValid()
     return isValid;
 }
 
+__override
 HRESULT CPBMImageParser::PopulateBitmap(_In_ Bitmap* pBitmap)
 {
     HRESULT hr = (m_uWidth * m_uHeight == m_uDataLen) ? S_OK : E_INVALIDARG;

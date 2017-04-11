@@ -4,6 +4,7 @@
 LONG g_cRef;
 HINSTANCE g_hinst;
 
+_Check_return_
 STDAPI DllGetClassObject(_In_ REFCLSID rclsid, _In_ REFIID riid, _Outptr_ LPVOID FAR* ppv)
 {
     HRESULT hr;

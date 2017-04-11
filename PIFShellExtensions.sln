@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensions", "PIFShellExtensions\PIFShellExtensions.vcxproj", "{73E69D94-C385-4703-AD0B-BB2FE6905F46}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -16,9 +16,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensionsTests", "
 		{73E69D94-C385-4703-AD0B-BB2FE6905F46} = {73E69D94-C385-4703-AD0B-BB2FE6905F46}
 	EndProjectSection
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup64", "PIFShellExtensionsInstaller32\PIFShellExtensionsInstaller32.vdproj", "{43B95D11-3CFF-4286-B075-CF222158561F}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup32", "PIFShellExtensionsInstaller32\PIFShellExtensionsInstaller32.vdproj", "{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup32", "PIFShellExtensionsInstaller64\PIFShellExtensionsInstaller64.vdproj", "{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup64", "PIFShellExtensionsInstaller64\PIFShellExtensionsInstaller64.vdproj", "{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,14 +53,6 @@ Global
 		{8E105821-E661-439F-BB4D-0745753A8CDA}.Release|x64.Build.0 = Release|x64
 		{8E105821-E661-439F-BB4D-0745753A8CDA}.Release|x86.ActiveCfg = Release|Win32
 		{8E105821-E661-439F-BB4D-0745753A8CDA}.Release|x86.Build.0 = Release|Win32
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Debug|x64.ActiveCfg = Debug
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Debug|x64.Build.0 = Debug
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Debug|x86.ActiveCfg = Debug
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Debug|x86.Build.0 = Debug
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Release|x64.ActiveCfg = Release
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Release|x64.Build.0 = Release
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Release|x86.ActiveCfg = Release
-		{43B95D11-3CFF-4286-B075-CF222158561F}.Release|x86.Build.0 = Release
 		{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}.Debug|x64.ActiveCfg = Debug
 		{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}.Debug|x64.Build.0 = Debug
 		{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}.Debug|x86.ActiveCfg = Debug
@@ -69,6 +61,14 @@ Global
 		{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}.Release|x64.Build.0 = Release
 		{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}.Release|x86.ActiveCfg = Release
 		{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}.Release|x86.Build.0 = Release
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Debug|x64.ActiveCfg = Debug
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Debug|x64.Build.0 = Debug
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Debug|x86.ActiveCfg = Debug
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Debug|x86.Build.0 = Debug
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Release|x64.ActiveCfg = Release
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Release|x64.Build.0 = Release
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Release|x86.ActiveCfg = Release
+		{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}.Release|x86.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

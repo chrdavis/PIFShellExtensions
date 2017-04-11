@@ -118,7 +118,7 @@ IFACEMETHODIMP CPIFShellExt::GetCurFile(_Outptr_ LPOLESTR* ppszFileName)
 }
 
 // IDataObject
-IFACEMETHODIMP CPIFShellExt::EnumFormatEtc(_In_ DWORD, _COM_Outptr_ IEnumFORMATETC** ppiefe)
+IFACEMETHODIMP CPIFShellExt::EnumFormatEtc(_In_ DWORD, _Outptr_ IEnumFORMATETC** ppiefe)
 {
     *ppiefe = nullptr;
     FORMATETC rgfmtetc[] =
@@ -192,7 +192,7 @@ IFACEMETHODIMP CPIFShellExt::GetCount(_Out_ DWORD* pcProps)
     return hr;
 }
 
-IFACEMETHODIMP CPIFShellExt::GetAt(_In_ DWORD iProp, _Outptr_ PROPERTYKEY* pkey)
+IFACEMETHODIMP CPIFShellExt::GetAt(_In_ DWORD iProp, _Out_ PROPERTYKEY* pkey)
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -202,7 +202,7 @@ IFACEMETHODIMP CPIFShellExt::GetAt(_In_ DWORD iProp, _Outptr_ PROPERTYKEY* pkey)
     return hr;
 }
 
-IFACEMETHODIMP CPIFShellExt::GetValue(_In_ REFPROPERTYKEY key, _Outptr_ PROPVARIANT* pPropVar)
+IFACEMETHODIMP CPIFShellExt::GetValue(_In_ REFPROPERTYKEY key, _Out_ PROPVARIANT* pPropVar)
 {
     HRESULT hr = _EnsurePropertyStore();
     if (SUCCEEDED(hr))
@@ -237,7 +237,7 @@ IFACEMETHODIMP CPIFShellExt::GetPropertyStore(
     _In_ GETPROPERTYSTOREFLAGS flags,
     _In_opt_ IUnknown* punk,
     _In_ REFIID riid,
-    _COM_Outptr_ void **ppv)
+    _Outptr_ void **ppv)
 {
     *ppv = nullptr;
     HRESULT hr = _EnsurePropertyStore();
@@ -258,7 +258,7 @@ IFACEMETHODIMP CPIFShellExt::GetPropertyStoreForKeys(
     _In_ UINT cKeys,
     _In_ GETPROPERTYSTOREFLAGS flags,
     _In_ REFIID riid,
-    _COM_Outptr_ void** ppv)
+    _Outptr_ void** ppv)
 {
     *ppv = nullptr;
     HRESULT hr = _EnsurePropertyStore();

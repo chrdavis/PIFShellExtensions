@@ -63,13 +63,13 @@ public:
     CPPMImageParser(){}
     virtual ~CPPMImageParser(){}
 
-    UINT GetBitDepth() { return 24; }
+    __override UINT GetBitDepth() { return 24; }
 
 private:
-    HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap);
-    HRESULT ReadImageData();
-    size_t GetAllocationSize();
-    bool IsDataSizeValid();
+    __override HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap);
+    __override HRESULT ReadImageData();
+    __override size_t GetAllocationSize();
+    __override bool IsDataSizeValid();
 };
 
 class CPGMImageParser : public CBaseImageParser
@@ -78,13 +78,13 @@ public:
     CPGMImageParser(){}
     virtual ~CPGMImageParser(){}
 
-    UINT GetBitDepth() { return 8; }
+    __override UINT GetBitDepth() { return 8; }
 
 private:
-    HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap);
-    HRESULT ReadImageData();
-    size_t GetAllocationSize();
-    bool IsDataSizeValid();
+    __override HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap);
+    __override HRESULT ReadImageData();
+    __override size_t GetAllocationSize();
+    __override bool IsDataSizeValid();
 };
 
 class CPBMImageParser : public CBaseImageParser
@@ -93,15 +93,15 @@ public:
     CPBMImageParser(){}
     virtual ~CPBMImageParser(){}
 
-    UINT GetBitDepth() { return 1; }
+    __override UINT GetBitDepth() { return 1; }
 
 private:
-    HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap);
-    HRESULT ReadImageHeaders();
-    HRESULT ReadImageData();
-    HRESULT ReadBinaryImageData();
-    size_t GetAllocationSize();
-    bool IsDataSizeValid();
+    __override HRESULT PopulateBitmap(_In_ Gdiplus::Bitmap* pBitmap);
+    __override HRESULT ReadImageHeaders();
+    __override HRESULT ReadImageData();
+    __override HRESULT ReadBinaryImageData();
+    __override size_t GetAllocationSize();
+    __override bool IsDataSizeValid();
 };
 
 

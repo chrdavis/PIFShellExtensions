@@ -4,7 +4,6 @@
 #include <propsys.h>
 #include <atlbase.h>
 #include "PIFParser.h"
-#include "ImageHelpers.h"
 
 void DllAddRef();
 void DllRelease();
@@ -52,7 +51,7 @@ public:
 
     // IDataObject
     IFACEMETHODIMP GetData(_In_ FORMATETC *pformatetcIn, _Out_ STGMEDIUM *pmedium);
-    IFACEMETHODIMP EnumFormatEtc(_In_ DWORD dwDirFlags, _COM_Outptr_ IEnumFORMATETC** ppief);
+    IFACEMETHODIMP EnumFormatEtc(_In_ DWORD dwDirFlags, _Outptr_ IEnumFORMATETC** ppief);
     IFACEMETHODIMP QueryGetData(_In_ FORMATETC* pfe);
     IFACEMETHODIMP GetDataHere(FORMATETC*, STGMEDIUM*) { return E_NOTIMPL; }
     IFACEMETHODIMP GetCanonicalFormatEtc(FORMATETC*, FORMATETC*) { return E_NOTIMPL; }
@@ -63,8 +62,8 @@ public:
 
     // IPropertyStore
     IFACEMETHODIMP GetCount(_Out_ DWORD* pcProps);
-    IFACEMETHODIMP GetAt(_In_ DWORD iProp, _Outptr_ PROPERTYKEY* pkey);
-    IFACEMETHODIMP GetValue(_In_ REFPROPERTYKEY key, _Outptr_ PROPVARIANT* pPropVar);
+    IFACEMETHODIMP GetAt(_In_ DWORD iProp, _Out_ PROPERTYKEY* pkey);
+    IFACEMETHODIMP GetValue(_In_ REFPROPERTYKEY key, _Out_ PROPVARIANT* pPropVar);
     IFACEMETHODIMP SetValue(_In_ REFPROPERTYKEY key, _In_ REFPROPVARIANT propVar);
     IFACEMETHODIMP Commit();
 
@@ -73,13 +72,13 @@ public:
         _In_ GETPROPERTYSTOREFLAGS flags,
         _In_opt_ IUnknown* punk,
         _In_ REFIID riid,
-        _COM_Outptr_ void** ppv);
+        _Outptr_ void** ppv);
     IFACEMETHODIMP GetPropertyStoreForKeys(
         _In_reads_opt_(cKeys) const PROPERTYKEY* rgKeys,
         _In_ UINT cKeys,
         _In_ GETPROPERTYSTOREFLAGS flags,
         _In_ REFIID riid,
-        _COM_Outptr_ void** ppv);
+        _Outptr_ void** ppv);
 
     // IInitializeWithStream
     IFACEMETHODIMP Initialize(_In_ IStream* pStream, _In_ DWORD grfMode);

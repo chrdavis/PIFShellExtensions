@@ -165,9 +165,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="PIFParser.h" />
     <ClInclude Include="PIFShellExtensions.h" />
     <ClInclude Include="stdafx.h" />
