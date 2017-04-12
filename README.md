@@ -5,7 +5,7 @@ Feel free to donate if you find this useful.
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=727QPFYPDHRKU&lc=US&item_name=Chris%20Davis&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted)
 
 ### Download
-[Latest 32 or 64 bit versions](https://github.com/chrdavis/PIFShellExtensions/releases/latest) 
+[Latest 32 and 64 bit versions](https://github.com/chrdavis/PIFShellExtensions/releases/latest) 
 
 ### Screenshots
 
