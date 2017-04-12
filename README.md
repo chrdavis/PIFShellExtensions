@@ -1,4 +1,4 @@
-Windows Shell extension to allow image types such as Portable Pixmap Format (PPM), Portable Graymap Format (PGM) and Portable Bitmap Format (PBM) to get thumbnail, properties and data object support in Windows Explorer.  Both ascii and binary versions of the above formats are supported.  Also, the generic portable anymap format (PNM) is also covered, which could be any of the previous 3 formats.
+Windows Shell extension to allow image types such as Portable Pixmap Format (PPM), Portable Graymap Format (PGM) and Portable Bitmap Format (PBM) to get thumbnail, properties and data object support in Windows Explorer.  Both ascii and binary versions of the above formats are supported.
 
 Feel free to donate if you find this useful.
 
