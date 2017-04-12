@@ -91,7 +91,7 @@
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\PIFShellExtensionsLib;..\PPMExtensionLib</IncludePath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)</IntDir>
+    <IntDir>$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)32</TargetName>
     <CodeAnalysisRuleSet>C:\Program Files (x86)\Microsoft Visual Studio 14.0\Team Tools\Static Analysis Tools\Rule Sets\NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
@@ -120,7 +120,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFShellExtensionsLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -141,7 +141,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFShellExtensionLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -187,7 +187,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFExtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\PPMExtensionLib</AdditionalLibraryDirectories>
       <Version>0.2</Version>
     </Link>
