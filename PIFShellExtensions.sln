@@ -8,7 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensions", "PIFSh
 		{D310541A-4178-43C1-91A1-EDDA0D173FC1} = {D310541A-4178-43C1-91A1-EDDA0D173FC1}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFExtLib", "PIFShellExtensionsLib\PIFShellExtensionsLib.vcxproj", "{D310541A-4178-43C1-91A1-EDDA0D173FC1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensionsLib", "PIFShellExtensionsLib\PIFShellExtensionsLib.vcxproj", "{D310541A-4178-43C1-91A1-EDDA0D173FC1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensionsTests", "PIFShellExtensionsTests\PIFShellExtensionsTests.vcxproj", "{8E105821-E661-439F-BB4D-0745753A8CDA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -17,8 +17,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PIFShellExtensionsTests", "
 	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup32", "PIFShellExtensionsInstaller32\PIFShellExtensionsInstaller32.vdproj", "{AE483C99-DC19-4BED-81DF-7DC33FAD8C45}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D310541A-4178-43C1-91A1-EDDA0D173FC1} = {D310541A-4178-43C1-91A1-EDDA0D173FC1}
+		{73E69D94-C385-4703-AD0B-BB2FE6905F46} = {73E69D94-C385-4703-AD0B-BB2FE6905F46}
+	EndProjectSection
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "PIFShellExtensionsSetup64", "PIFShellExtensionsInstaller64\PIFShellExtensionsInstaller64.vdproj", "{28989AEC-E6F1-4D5C-85CF-F6925DA8910B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D310541A-4178-43C1-91A1-EDDA0D173FC1} = {D310541A-4178-43C1-91A1-EDDA0D173FC1}
+		{73E69D94-C385-4703-AD0B-BB2FE6905F46} = {73E69D94-C385-4703-AD0B-BB2FE6905F46}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
