@@ -1,3 +1,5 @@
+
 theme: jekyll-theme-slate
 
 title: Portable Image File Shell Extension
+show_downloads: true 
