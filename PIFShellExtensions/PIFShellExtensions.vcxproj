@@ -120,7 +120,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFExtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFShellExtensionsLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -141,7 +141,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFExtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFShellExtensionLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -163,7 +163,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFExtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFShellExtensionsLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\PPMExtensionLib</AdditionalLibraryDirectories>
       <Version>0.2</Version>
     </Link>
@@ -187,7 +187,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>Source.def</ModuleDefinitionFile>
-      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFExtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;shlwapi.lib;gdi32.lib;gdiplus.lib;propsys.lib;$(OutDir)PIFShellExtensionsLib.lib;$(OutDir)PIFExtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\PPMExtensionLib</AdditionalLibraryDirectories>
       <Version>0.2</Version>
     </Link>
