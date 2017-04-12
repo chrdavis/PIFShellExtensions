@@ -4,3 +4,4 @@ I originally wrote this Shell extension almost 10 years ago while in graduate sc
 
 Documentation on the image formats can be found at: https://en.wikipedia.org/wiki/Netpbm_format 
 
+![Image description](/images/PIFShellExtensionDemo2.jpg)
