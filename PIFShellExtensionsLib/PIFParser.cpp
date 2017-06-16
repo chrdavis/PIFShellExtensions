@@ -24,7 +24,11 @@ CBaseImageParser::CBaseImageParser() :
 
 CBaseImageParser::~CBaseImageParser()
 {
-    delete [] m_rgData;
+    if (m_rgData)
+    {
+        delete [] m_rgData;
+    }
+
     GdiplusShutdown(_gdiPlusToken);
 }
 

@@ -456,53 +456,52 @@ HRESULT CPIFShellExt::_InitializeProperties()
         PROPVARIANT pv = {};
         CBaseImageParser* pImageParser = nullptr;
         hr = CBaseImageParser::CreateParserFromStream(_spStream, &pImageParser);
-
         if (SUCCEEDED(hr))
         {
             pv.vt = VT_LPWSTR;
             pv.pwszVal = L"image/bmp";
             hr = _spPropertyStore->SetValue(PKEY_MIMEType, pv);
+
+            if (SUCCEEDED(hr))
+            {
+                pv.vt = VT_UI4;
+                pv.ulVal = pImageParser->GetWidth();
+                hr = _spPropertyStore->SetValue(PKEY_Image_HorizontalSize, pv);
+            }
+
+            if (SUCCEEDED(hr))
+            {
+                pv.vt = VT_UI4;
+                pv.ulVal = pImageParser->GetHeight();
+                hr = _spPropertyStore->SetValue(PKEY_Image_VerticalSize, pv);
+            }
+
+            if (SUCCEEDED(hr))
+            {
+                pv.vt = VT_UI4;
+                pv.ulVal = pImageParser->GetBitDepth();
+                hr = _spPropertyStore->SetValue(PKEY_Image_BitDepth, pv);
+            }
+
+            if (SUCCEEDED(hr))
+            {
+                wchar_t szResolution[30];
+                hr = StringCchPrintf(szResolution, ARRAYSIZE(szResolution), L"%i x %i", pImageParser->GetWidth(), pImageParser->GetHeight());
+                pv.vt = VT_LPWSTR;
+                pv.pwszVal = szResolution;
+                hr = _spPropertyStore->SetValue(PKEY_Image_Dimensions, pv);
+            }
+
+            if (SUCCEEDED(hr))
+            {
+                _fPropertiesInitialized = true;
+            }
+
+            delete pImageParser;
+            pImageParser = nullptr;
+
+            IStream_Reset(_spStream);
         }
-
-        if (SUCCEEDED(hr))
-        {
-            pv.vt = VT_UI4;
-            pv.ulVal = pImageParser->GetWidth();
-            hr = _spPropertyStore->SetValue(PKEY_Image_HorizontalSize, pv);
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            pv.vt = VT_UI4;
-            pv.ulVal = pImageParser->GetHeight();
-            hr = _spPropertyStore->SetValue(PKEY_Image_VerticalSize, pv);
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            pv.vt = VT_UI4;
-            pv.ulVal = pImageParser->GetBitDepth();
-            hr = _spPropertyStore->SetValue(PKEY_Image_BitDepth, pv);
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            wchar_t szResolution[30];
-            hr = StringCchPrintf(szResolution, ARRAYSIZE(szResolution), L"%i x %i", pImageParser->GetWidth(), pImageParser->GetHeight());
-            pv.vt = VT_LPWSTR;
-            pv.pwszVal = szResolution;
-            hr = _spPropertyStore->SetValue(PKEY_Image_Dimensions, pv);
-        }
-
-        if (SUCCEEDED(hr))
-        {
-            _fPropertiesInitialized = true;
-        }
-
-        delete pImageParser;
-        pImageParser = nullptr;
-
-        IStream_Reset(_spStream);
     }
     return hr;
 }
