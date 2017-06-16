@@ -6,6 +6,9 @@ Feel free to donate if you find this useful.
 
 ### Download
 [Latest 32 and 64 bit versions](https://github.com/chrdavis/PIFShellExtensions/releases/latest) 
+Windows Vista,7,8,10
+
+Will likely need to restart windows for the extension to be picked up by Windows Explorer.
 
 ### Screenshots
 
