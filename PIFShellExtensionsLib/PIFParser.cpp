@@ -356,7 +356,7 @@ HRESULT CBaseImageParser::ReadLineFromStream(
         while (SUCCEEDED(hr) && IsWhitespace(chCurrent))
         {
             hr = IStream_Read(pStream, (void*)&chCurrent, sizeof(char));
-            if (IsWhitespace(chCurrent))
+            if (SUCCEEDED(hr) && IsWhitespace(chCurrent))
             {
                 // If we found leading white space chars we need to update
                 // our origin.
