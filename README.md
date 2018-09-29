@@ -8,7 +8,7 @@ If you find this useful, feel free to buy me a beer!
 [Latest 32 and 64 bit versions](https://github.com/chrdavis/PIFShellExtensions/releases/latest) 
 Windows Vista,7,8,10
 
-Will likely need to restart windows for the extension to be picked up by Windows Explorer.
+You will likely need to restart windows for the extension to be picked up by Windows Explorer.
 
 ### Screenshots
 
