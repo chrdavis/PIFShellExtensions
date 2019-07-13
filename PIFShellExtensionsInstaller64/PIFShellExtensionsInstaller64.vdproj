@@ -209,7 +209,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Portable Image Format Windows Shell Extension"
         "ProductCode" = "8:{AEFF6D1E-0CFC-4BE9-B55E-625ED19EE615}"
-        "PackageCode" = "8:{3D44E1FC-8255-4903-B4D2-F8055AF585CD}"
+        "PackageCode" = "8:{7EC7C546-56A2-47F6-A88D-C574FB96A196}"
         "UpgradeCode" = "8:{DAE6DEC5-EED7-4743-BA34-BEAFA8BC7CE8}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -796,7 +796,7 @@
                                                     "Condition" = "8:"
                                                     "Transitive" = "11:FALSE"
                                                     "ValueTypes" = "3:1"
-                                                    "Value" = "8:[TARGETDIR]PIFShellExtensions64.dll"
+                                                    "Value" = "8:[TARGETDIR]PIFShellExtensions32.dll"
                                                     }
                                                 }
                                             }
