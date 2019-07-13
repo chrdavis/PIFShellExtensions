@@ -803,6 +803,14 @@
                                         }
                                         "Values"
                                         {
+                                            "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_30D8B9F972C341F2B48C0FC4DAACA679"
+                                            {
+                                            "Name" = "8:"
+                                            "Condition" = "8:"
+                                            "Transitive" = "11:FALSE"
+                                            "ValueTypes" = "3:1"
+                                            "Value" = "8:Portable Image Format Shell Extension"
+                                            }
                                         }
                                     }
                                 }
@@ -984,6 +992,14 @@
                                 }
                                 "Values"
                                 {
+                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_450C51EDA9DC4DB790C6A0C8FC62D975"
+                                    {
+                                    "Name" = "8:"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "ValueTypes" = "3:1"
+                                    "Value" = "8:Portable Image Format Shell Extension"
+                                    }
                                 }
                             }
                         }

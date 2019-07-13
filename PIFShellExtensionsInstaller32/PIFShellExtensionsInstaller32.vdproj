@@ -714,6 +714,14 @@
                                 }
                                 "Values"
                                 {
+                                    "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_20A1C29A58B7482BBF92A30AB94B14DE"
+                                    {
+                                    "Name" = "8:"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "ValueTypes" = "3:1"
+                                    "Value" = "8:Portable Image Format Shell Extension"
+                                    }
                                 }
                             }
                         }
