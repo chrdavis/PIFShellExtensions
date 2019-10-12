@@ -299,24 +299,30 @@ HRESULT CBaseImageParser::InitializeFromStream(_In_ IStream* pStream)
     HRESULT hr = ReadImageHeaders();
     if (SUCCEEDED(hr))
     {
-        char chCurrent = ' ';
-        // Walk past any remaining whitespace
-        while (SUCCEEDED(hr) && IsWhitespace(chCurrent))
+        // Only read over whitespace for ASCII mode image formats
+        if ((m_imageType == PortableImageFormatType_PBMA) ||
+            (m_imageType == PortableImageFormatType_PGMA) ||
+            (m_imageType == PortableImageFormatType_PPMA))
         {
-            hr = IStream_Read(pStream, (void*)&chCurrent, sizeof(char));
-        }
+            char chCurrent = ' ';
+            // Walk past any remaining whitespace
+            while (SUCCEEDED(hr) && IsWhitespace(chCurrent))
+            {
+                hr = IStream_Read(pStream, (void*)&chCurrent, sizeof(char));
+            }
 
-        if (SUCCEEDED(hr))
-        {
-            // Move back before the last read char
-            ULARGE_INTEGER uliCurrentSeek;
-            hr = pStream->Seek(c_liZero, STREAM_SEEK_CUR, &uliCurrentSeek);
             if (SUCCEEDED(hr))
             {
-                LARGE_INTEGER seekSet = { 0 };
-                seekSet.LowPart = uliCurrentSeek.LowPart - 1;
-                seekSet.HighPart = uliCurrentSeek.HighPart;
-                hr = pStream->Seek(seekSet, STREAM_SEEK_SET, nullptr);
+                // Move back before the last read char
+                ULARGE_INTEGER uliCurrentSeek;
+                hr = pStream->Seek(c_liZero, STREAM_SEEK_CUR, &uliCurrentSeek);
+                if (SUCCEEDED(hr))
+                {
+                    LARGE_INTEGER seekSet = { 0 };
+                    seekSet.LowPart = uliCurrentSeek.LowPart - 1;
+                    seekSet.HighPart = uliCurrentSeek.HighPart;
+                    hr = pStream->Seek(seekSet, STREAM_SEEK_SET, nullptr);
+                }
             }
         }
     }
