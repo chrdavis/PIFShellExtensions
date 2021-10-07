@@ -12,7 +12,7 @@ const LARGE_INTEGER c_liZero = { 0, 0 };
 CBaseImageParser::CBaseImageParser() :
     m_uWidth(0),
     m_uHeight(0),
-    m_uMaxValue(0),
+    m_uMaxValue(255),
     m_uDataLen(0),
     m_spStream(nullptr),
     m_rgData(nullptr),
@@ -231,6 +231,7 @@ HRESULT CBaseImageParser::ReadAsciiImageData()
                 {
                     char* pCurrNumStart = pAsciiData;
                     char* pCurrNumEnd = pAsciiData;
+                    double normalize = 255.0 / m_uMaxValue;
 
                     while (SUCCEEDED(hr) && pCurrNumStart && *pCurrNumStart != '\0')
                     {
@@ -257,7 +258,7 @@ HRESULT CBaseImageParser::ReadAsciiImageData()
                             hr = (static_cast<UINT>(pDataCurr - m_rgData) < m_uDataLen) ? S_OK : E_FAIL;
                             if (SUCCEEDED(hr))
                             {
-                                *pDataCurr = static_cast<BYTE>(atoi(pCurrNumStart));
+                                *pDataCurr = static_cast<BYTE>(atof(pCurrNumStart) * normalize);
                                 // Move our insertion pointer for the data
                                 pDataCurr++;
                             }
